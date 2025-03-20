@@ -41,7 +41,6 @@ class AsyncStateWidget extends StatelessWidget {
     AsyncState? state,
     Widget? emptyAsyncWidget,
   ) {
-    final theme = Theme.of(context);
     // final t = T.of(context);
 
     switch (state) {

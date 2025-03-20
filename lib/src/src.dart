@@ -7,4 +7,5 @@ export 'widgets/chat_bubble/widgets/time_status_widget.dart';
 export 'widgets/container/style.dart';
 export 'widgets/others/live_date_time.dart';
 export 'widgets/others/nil.dart';
-export 'widgets/others/parallax_image.dart';
+export 'widgets/texts/rich_text_widget.dart';
+export 'widgets/texts/texts.dart';

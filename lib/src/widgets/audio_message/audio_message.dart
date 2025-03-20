@@ -1,8 +1,8 @@
+import 'package:almohad_design_system/almohad_design_system.dart';
+import 'package:almohad_design_system/src/widgets/audio_message/audio_time_status.dart';
 import 'package:audioplayers/audioplayers.dart' as player;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/flutter_design_system.dart';
-import 'package:flutter_design_system/src/widgets/audio_message/audio_time_status.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AudioMessage extends StatefulWidget {

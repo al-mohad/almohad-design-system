@@ -1,8 +1,9 @@
+import 'package:almohad_design_system/src/widgets/audio_message/audio_message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/src/widgets/audio_message/audio_message.dart';
 
 import 'src/src.dart';
 import 'src/widgets/container/custom_container.dart';
+import 'src/widgets/others/parallax_image.dart';
 import 'src/widgets/texts/text_form_field.dart';
 
 export 'src/src.dart';

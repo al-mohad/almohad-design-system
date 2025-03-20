@@ -1,5 +1,5 @@
+import 'package:almohad_design_system/src/widgets/chat_bubble/models/message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/src/widgets/chat_bubble/models/message.dart';
 
 import '../utils/format_time.dart' show formatChatTime;
 

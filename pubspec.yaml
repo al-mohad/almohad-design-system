@@ -1,7 +1,7 @@
-name: flutter_design_system
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
+name: almohad_design_system
+description: A personalized design system for Flutter applications, providing reusable UI components like buttons, cards, chat bubbles, and more.
+version: 0.0.2
+homepage: https://github.com/al-mohad/almohad-design-system
 
 environment:
   sdk: ^3.7.0

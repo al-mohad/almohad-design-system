@@ -1,6 +1,6 @@
+import 'package:almohad_design_system/src/widgets/texts/texts.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/src/widgets/texts/texts.dart';
 
 @immutable
 class RichTextWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/flutter_design_system.dart';
+import 'package:almohad_design_system/almohad_design_system.dart';
 
 class ParallaxImagesExample extends StatelessWidget {
   const ParallaxImagesExample({super.key});

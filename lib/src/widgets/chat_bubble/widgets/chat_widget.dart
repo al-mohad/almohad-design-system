@@ -1,5 +1,5 @@
+import 'package:almohad_design_system/src/widgets/chat_bubble/models/message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_design_system/src/widgets/chat_bubble/models/message.dart';
 
 import 'chat_message_text.dart';
 import 'time_status_widget.dart' show TimeStatusWidget;
