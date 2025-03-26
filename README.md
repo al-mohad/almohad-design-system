@@ -1,4 +1,4 @@
-# Almohad Design System
+# Flutter Design System
 
 This Design System is a collection of reusable UI components for Flutter applications, including buttons, cards, chat bubbles, and more.
 

@@ -31,19 +31,20 @@ class DesignSystem {
     TextStyle? messageTextStyle,
     TextStyle? timeTextStyle,
     ChatWidgetType? type,
+    Function(List<String>, int)? onImagePreview,
   }) {
     return ChatWidget(
       message: message,
       isSender: isSender,
       showAvatar: showAvatar,
       chatWidgetType: type,
-
       onHashtagTapped: onHashtagTapped,
       onTagTapped: onTagTapped,
       onUrlTapped: onUrlTapped,
       bubbleColor: bubbleColor,
       messageTextStyle: messageTextStyle,
       timeTextStyle: timeTextStyle,
+      onImagePreview: onImagePreview,
     );
   }
 
