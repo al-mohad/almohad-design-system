@@ -287,10 +287,12 @@ class DesignSystem {
     required String? errorImagePath,
     required double? size,
     required AvatarType? type,
+    bool isAsset = false,
   }) => CustomAvatar(
     imageUrl: imagePath,
     size: size,
     avatarType: type,
+    isAsset: isAsset,
     errorImage: errorImagePath,
   );
 

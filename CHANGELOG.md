@@ -180,3 +180,5 @@ Upgrade now and enjoy the enhancements!
 - **Enhanced UI flexibility & performance.**
 
 - **Fixed minor alignment issues.**
+
+## 0.1.5 - Updates 🚀
