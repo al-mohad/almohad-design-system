@@ -1,3 +1,5 @@
+import 'package:almohad_design_system/almohad_design_system.dart';
+import 'package:example/buttons_example.dart';
 import 'package:example/dummy_containers.dart';
 import 'package:example/dummy_texts.dart';
 import 'package:example/parallax_images.dart';
@@ -79,7 +81,19 @@ class _MyHomePageState extends State<MyHomePage> {
               trailing: const Icon(Icons.arrow_forward_ios),
               subtitle: Text('This is a simple example of an expanded widget.'),
             ),
-
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ButtonsExample(),
+                  ),
+                );
+              },
+              title: Text('Buttons Example'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            ),
+            DesignSystem.liveTime(child: Text('data')),
             ListTile(
               onTap: () {
                 Navigator.push(

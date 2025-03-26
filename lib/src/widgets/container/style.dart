@@ -1,1 +1,9 @@
-enum ContainerStyle { claymorphism, glassmorphism, neumorphism, flat, elevated }
+enum ContainerStyle {
+  claymorphism,
+  glassmorphism,
+  neumorphism,
+  flat,
+  elevated,
+  bordered,
+  dottedBorder,
+}

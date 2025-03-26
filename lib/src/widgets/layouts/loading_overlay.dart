@@ -1,6 +1,5 @@
+import 'package:almohad_design_system/src/widgets/others/loader/custom_loader.dart';
 import 'package:flutter/material.dart';
-
-import '../others/my_loading_indicator.dart';
 
 class LoadingOverlay extends StatefulWidget {
   final bool isBusy;
@@ -69,7 +68,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         if (_opacity >= 0.5)
           Opacity(
             opacity: (_opacity - 0.5) * 2,
-            child: Center(child: MyLoadingIndicator()),
+            child: Center(child: customLoader(context)),
           ),
       ],
     );

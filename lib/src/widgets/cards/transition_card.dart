@@ -5,12 +5,12 @@ const BoxDecoration _expandedDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(16)),
 );
 
-class LocationWidget extends StatefulWidget {
+class ExpandableWidget extends StatefulWidget {
   final List<Widget> expandedChildren;
   final Widget collapsedContent;
   final BoxDecoration? expandedDecoration;
   final BoxDecoration? collapsedDecoration;
-  const LocationWidget({
+  const ExpandableWidget({
     super.key,
     required this.expandedChildren,
     required this.collapsedContent,
@@ -22,7 +22,7 @@ class LocationWidget extends StatefulWidget {
   LocationWidgetState createState() => LocationWidgetState();
 }
 
-class LocationWidgetState extends State<LocationWidget> {
+class LocationWidgetState extends State<ExpandableWidget> {
   bool isExpanded = false;
 
   @override

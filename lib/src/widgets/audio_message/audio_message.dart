@@ -17,7 +17,7 @@ class AudioMessage extends StatefulWidget {
   final TextStyle? timeTextStyle;
   final TextStyle? titleStyle;
   final bool showUserAvatar;
-  final dynamic userAvatar; // Can be a String (URL) or a Widget
+  final dynamic userAvatar;
 
   const AudioMessage({
     super.key,
@@ -31,8 +31,8 @@ class AudioMessage extends StatefulWidget {
     this.accentColor,
     this.timeTextStyle,
     this.titleStyle,
-    this.showUserAvatar = true, // Default: show avatar
-    this.userAvatar, // Accepts String (URL) or Widget
+    this.showUserAvatar = true,
+    this.userAvatar,
   });
 
   @override
@@ -136,7 +136,7 @@ class _AudioMessageState extends State<AudioMessage> {
       mainAxisAlignment:
           widget.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (!widget.isSender) // Show avatar only for received messages
+        if (!widget.isSender)
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: _buildAvatar(),
@@ -152,7 +152,7 @@ class _AudioMessageState extends State<AudioMessage> {
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(widget.isSender ? 12 : 6),
                 topRight: Radius.circular(widget.isSender ? 6 : 12),
-                bottomLeft: Radius.circular(20), // More rounded bottom corners
+                bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ),
             ),

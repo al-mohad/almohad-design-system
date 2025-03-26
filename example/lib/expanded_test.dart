@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:almohad_design_system/almohad_design_system.dart';
+import 'package:flutter/material.dart';
 
 class ExpandedTest extends StatefulWidget {
   const ExpandedTest({super.key});
@@ -27,9 +27,8 @@ class _ExpandedTestState extends State<ExpandedTest> {
               ],
             ),
           ],
-          collapsedContent: Image.network(
-            'https://i.pravatar.cc/',
-            fit: BoxFit.cover,
+          collapsedContent: Center(
+            child: Text('Drag this widget up to expand'),
           ),
         ),
       ),
