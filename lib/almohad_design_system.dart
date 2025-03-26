@@ -18,7 +18,21 @@ export 'src/src.dart';
 /// **DesignSystem** - A centralized class for reusable UI components
 class DesignSystem {
   DesignSystem._(); // Prevent instantiation
-  /// A chat bubble widget with different styles
+  /// A chat bubble widget with different styles.
+  ///
+  /// **Parameters:**
+  /// - `message`: The chat message object.
+  /// - `isSender`: True if the current user sent the message.
+  /// - `showAvatar`: Whether to display the avatar (default true).
+  /// - `onHashtagTapped`, `onTagTapped`, `onUrlTapped`: Callbacks for interactive text.
+  /// - `bubbleColor`, `textColor`, `timestampColor`: Custom colors.
+  /// - `avatarBackgroundColor`, `avatarRadius`: Avatar customization.
+  /// - `bubblePadding`, `chatPadding`: Padding around the bubble and overall widget.
+  /// - `bubbleRadius`: Custom border radius for the bubble.
+  /// - `messageTextStyle`, `timeTextStyle`, `usernameTextStyle`: Custom text styles.
+  /// - `type`: The chat widget type (text, image, or audio).
+  /// - `onImagePreview`: Callback when an image thumbnail is tapped.
+  /// - `viewType`: How to display image messages (grid or list).
   static Widget chatBubble({
     required ChatMessage message,
     required bool isSender,
@@ -31,7 +45,7 @@ class DesignSystem {
     TextStyle? timeTextStyle,
     ChatWidgetType? type,
     Function(List<String>, int)? onImagePreview,
-    ImageViewType? viewType,
+    // ImageViewType? viewType,
     Color? textColor,
     Color? timestampColor,
     Color? avatarBackgroundColor,
@@ -40,6 +54,8 @@ class DesignSystem {
     EdgeInsets? chatPadding,
     BorderRadius? bubbleRadius,
     TextStyle? usernameTextStyle,
+    double? listImageHeight,
+    double? imageThumbnailHeight,
   }) {
     return ChatWidget(
       message: message,
@@ -53,7 +69,9 @@ class DesignSystem {
       timeTextStyle: timeTextStyle,
       chatWidgetType: type,
       onImagePreview: onImagePreview,
-      imageViewType: viewType,
+      // listImageHeight: listImageHeight,
+      // imageThumbnailHeight: imageThumbnailHeight,
+      // imageViewType: viewType,
       textColor: textColor,
       timestampColor: timestampColor,
       avatarBackgroundColor: avatarBackgroundColor,
@@ -94,6 +112,10 @@ class DesignSystem {
       userAvatar: userAvatar, // Network Image
       time: time,
     );
+  }
+
+  static Widget chatInput({required TextEditingController textController}) {
+    return CustomChatInput(textEditingController: textController);
   }
 
   /// A text field widget with different styles

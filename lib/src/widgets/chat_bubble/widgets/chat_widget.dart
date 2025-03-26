@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:almohad_design_system/src/widgets/images/dynamic_image_grid.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../almohad_design_system.dart';
@@ -17,6 +17,7 @@ class ChatWidget extends StatelessWidget {
   final Function(String)? onUrlTapped;
   final Function(List<String>, int)? onImagePreview;
 
+  // Customization properties
   final Color? bubbleColor;
   final Color? textColor;
   final Color? timestampColor;
@@ -29,8 +30,14 @@ class ChatWidget extends StatelessWidget {
   final TextStyle? timeTextStyle;
   final TextStyle? usernameTextStyle;
 
+  // Message type and image view type
   final ChatWidgetType? chatWidgetType;
   final ImageViewType? imageViewType;
+
+  // Optional custom dimensions for image thumbnails in grid or list view.
+  final double? imageThumbnailWidth;
+  final double? imageThumbnailHeight;
+  final double? listImageHeight;
 
   const ChatWidget({
     super.key,
@@ -46,23 +53,25 @@ class ChatWidget extends StatelessWidget {
     this.timestampColor,
     this.avatarBackgroundColor,
     this.avatarRadius = 16,
-    this.bubblePadding = const EdgeInsets.symmetric(
-      horizontal: 10,
-      vertical: 6,
-    ),
-    this.chatPadding = const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+    this.bubblePadding,
+    this.chatPadding,
     this.bubbleRadius,
     this.messageTextStyle,
     this.timeTextStyle,
     this.usernameTextStyle,
     this.chatWidgetType,
     this.imageViewType,
+    this.imageThumbnailWidth,
+    this.imageThumbnailHeight,
+    this.listImageHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: chatPadding!,
+      padding:
+          chatPadding ??
+          const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
@@ -70,12 +79,16 @@ class ChatWidget extends StatelessWidget {
         children: [
           if (!isSender && showAvatar) _buildAvatar(),
           const SizedBox(width: 8),
-          _buildChatBubble(context),
+          Flexible(
+            // 💡 Ensure the bubble doesn't overflow
+            child: _buildChatBubble(context),
+          ),
         ],
       ),
     );
   }
 
+  /// Builds the sender's avatar; shown only if `isSender` is false.
   Widget _buildAvatar() {
     return CircleAvatar(
       radius: avatarRadius,
@@ -91,6 +104,7 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
+  /// Builds the chat bubble with the appropriate message content.
   Widget _buildChatBubble(BuildContext context) {
     return Column(
       crossAxisAlignment:
@@ -104,7 +118,9 @@ class ChatWidget extends StatelessWidget {
             borderRadius: bubbleRadius ?? BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: bubblePadding!,
+            padding:
+                bubblePadding ??
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             child: _buildMessageContent(context),
           ),
         ),
@@ -112,6 +128,7 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
+  /// Decides which content to show (text, image, or audio).
   Widget _buildMessageContent(BuildContext context) {
     switch (chatWidgetType) {
       case ChatWidgetType.text:
@@ -121,10 +138,11 @@ class ChatWidget extends StatelessWidget {
       case ChatWidgetType.image:
         return _buildImageMessage(context);
       default:
-        return _buildTextMessage();
+        return _buildTextMessage(); // Fallback to text message.
     }
   }
 
+  /// Builds a text message.
   Widget _buildTextMessage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,6 +168,7 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
+  /// Builds an audio message with an inline player.
   Widget _buildAudioMessage() {
     return DesignSystem.audioPlayer(
       isSender: isSender,
@@ -164,9 +183,11 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
+  /// Builds an image message, supporting both grid and list view layouts.
   Widget _buildImageMessage(BuildContext context) {
     final images = message.imageUrls ?? [];
     if (imageViewType == ImageViewType.list) {
+      // List view: each image in its own row.
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:
@@ -181,7 +202,7 @@ class ChatWidget extends StatelessWidget {
                     child: Image.network(
                       url,
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: 150,
+                      height: listImageHeight ?? 150,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -190,67 +211,11 @@ class ChatWidget extends StatelessWidget {
             }).toList(),
       );
     } else {
-      return Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: [
-          for (int i = 0; i < (images.length > 3 ? 3 : images.length); i++)
-            _buildImageThumbnail(images, i),
-          if (images.length > 3) _buildMoreImagesOverlay(images),
-        ],
+      return SizedBox(
+        height: 200,
+        width: 200,
+        child: DynamicImageGrid(imageUrls: images),
       );
     }
-  }
-
-  Widget _buildImageThumbnail(List<String> images, int index) {
-    return GestureDetector(
-      onTap: () => onImagePreview?.call(images, index),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: CachedNetworkImage(
-          imageUrl: images[index],
-          width: 80,
-          height: 80,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMoreImagesOverlay(List<String> images) {
-    return GestureDetector(
-      onTap: () => onImagePreview?.call(images, 3),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              imageUrl: images[3],
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.6),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                "+${images.length - 3} more",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

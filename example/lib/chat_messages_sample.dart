@@ -62,6 +62,32 @@ class DummyConversation extends StatelessWidget {
           ),
           DesignSystem.chatBubble(
             message: ChatMessage(
+              imageUrls: [
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+                "https://i.pravatar.cc",
+              ],
+              time: DateTime.now(),
+              message: 'Hi',
+              status: ChatStatus.delivered,
+            ),
+            isSender: true,
+            type: ChatWidgetType.image,
+            bubblePadding: EdgeInsets.zero,
+            // viewType: ImageViewType.list,
+            onImagePreview: (images, index) {
+              print("Image tapped: ${images[index]}");
+            },
+          ),
+
+          DesignSystem.chatBubble(
+            message: ChatMessage(
               message: 'Sounds good! Ping me at @mike if you need help.',
               status: ChatStatus.sent,
               time: DateTime.now().subtract(Duration(minutes: 3)),
@@ -78,6 +104,10 @@ class DummyConversation extends StatelessWidget {
             isSender: true,
           ),
         ],
+      ),
+      bottomSheet: Padding(
+        padding: EdgeInsets.only(bottom: 20, left: 5, right: 5),
+        child: DesignSystem.chatInput(textController: TextEditingController()),
       ),
     );
   }

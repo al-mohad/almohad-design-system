@@ -156,7 +156,7 @@ This update brings **smoother animations, enhanced user interactions, and new de
 
 ## 🔥 Almohad Design System is Smoother, Faster & More Powerful! 🚀
 
-This update makes **UI interactions more dynamic, chat experiences richer, and performance smoother**.  
+This update makes **UI interactions more dynamic, chat experiences richer, and performance smoother**.
 Upgrade now and enjoy the enhancements!
 
 📌 _Next update: More animations, gesture-based interactions & AI-powered UI components!_ 🚀
@@ -166,3 +166,17 @@ Upgrade now and enjoy the enhancements!
 ## 0.1.0 - \_Major Improvements 🚀🎉
 
 ## 0.1.1 - \_Major Improvements 🚀🎉
+
+## 0.1.2 - \_Major Improvements 🚀🎉
+
+## 0.1.3 - \_Major Improvements 🚀🎉
+
+## 0.1.4 - Updates 🚀
+
+### Added `chatInput` widget – Customizable chat input with interactive options. 💬
+
+#### Improvements
+
+- **Enhanced UI flexibility & performance.**
+
+- **Fixed minor alignment issues.**
