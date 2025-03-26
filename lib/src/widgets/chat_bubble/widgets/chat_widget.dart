@@ -33,19 +33,19 @@ class ChatWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
             isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isSender && showAvatar) _buildAvatar(),
           const SizedBox(width: 8),
-          _buildMessageBubble(context),
+          _buildChatBubble(context),
         ],
       ),
     );
   }
 
-  /// Builds the sender/receiver avatar.
+  /// Builds the sender's avatar, shown only if `isSender` is `false`
   Widget _buildAvatar() {
     return CircleAvatar(
       radius: 16,
@@ -57,14 +57,14 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Builds the chat bubble UI.
-  Widget _buildMessageBubble(BuildContext context) {
+  /// Builds the chat bubble with text and status
+  Widget _buildChatBubble(BuildContext context) {
     return Column(
       crossAxisAlignment:
           isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Card(
-          margin: EdgeInsets.zero,
+          margin: const EdgeInsets.all(2),
           color:
               bubbleColor ?? (isSender ? Colors.blue[100] : Colors.grey[300]),
           shape: RoundedRectangleBorder(
@@ -75,27 +75,40 @@ class ChatWidget extends StatelessWidget {
               bottomRight: Radius.circular(isSender ? 4 : 12),
             ),
           ),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.75,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ChatMessageText(
-                  text: message.message,
-                  onHashtagTapped: onHashtagTapped,
-                  onTagTapped: onTagTapped,
-                  onUrlTapped: onUrlTapped,
-                  textStyle: messageTextStyle,
-                ),
-                TimeStatusWidget(message: message, textStyle: timeTextStyle),
-              ],
-            ),
-          ),
+          child: _buildMessageContent(context),
         ),
       ],
+    );
+  }
+
+  /// Message content including text, hashtags, and status
+  Widget _buildMessageContent(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.8,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ChatMessageText(
+              text: message.message,
+              onHashtagTapped: onHashtagTapped,
+              onTagTapped: onTagTapped,
+              onUrlTapped: onUrlTapped,
+              textStyle: messageTextStyle,
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: TimeStatusWidget(
+                message: message,
+                textStyle: timeTextStyle,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

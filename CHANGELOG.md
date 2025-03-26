@@ -104,3 +104,5 @@ This version refines the **Almohad Design System** with **better usability, smoo
 This update brings **smoother animations, enhanced user interactions, and new design possibilities** to **Flutter applications**. 🚀🎨
 
 🔄 _Stay tuned for more improvements in the next release!_ 🚀
+
+## 0.0.7 - \_Major Improvements 🚀🎉
