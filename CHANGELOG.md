@@ -56,3 +56,51 @@
 - **Refactored dependencies** for better modularity.
 
 This version refines the **Almohad Design System** with **better usability, smoother animations, and more flexibility** in UI components! 🎨🔥
+
+## 0.0.6 - _Major Improvements & New Features_ 🚀🎉
+
+### **🆕 New Features & Widgets**
+
+- **Chat Bubble (`chatBubble`)** → Enhanced message styling & interactivity. 💬
+- **Audio Player (`audioPlayer`)** → Seamless audio playback with progress tracking. 🎵
+- **Back Navigation Support (`handleBackGesture`)** → Improved Android 13+ gesture handling. 🔙
+- **Dynamic Shadow (`shadowEffect`)** → Apply adjustable depth & glow effects. 🌟
+- **Animated Gradient (`gradientEffect`)** → Beautiful gradient transitions for UI elements. 🎨
+- **Divider (`customDivider`)** → Customizable dividers with spacing & styles. ✂️
+- **Avatar Group (`avatarGroup`)** → Display multiple avatars in a stacked layout. 👥
+- **Blur Effect (`blurContainer`)** → Apply dynamic blur to enhance UI aesthetics. 🔍
+
+---
+
+### **⚡ Enhancements & Refinements**
+
+- **Chat Bubbles**
+
+  - Optimized **alignment, padding, and animations** for a smooth experience.
+  - Added **support for mentions (`@user`), hashtags (`#topic`), and URLs** with clickable actions.
+
+- **Button Improvements**
+
+  - More customization options for **hover, press, and focus states**.
+  - Added **loading indicators** for async operations.
+
+- **Overlay System**
+  - **Improved Loading Overlay (`overlayLoading`)** – Now supports **background blur**.
+  - **Custom Dialogs (`showDialog`)** – More **flexible modal support** with animations.
+
+---
+
+### **🐛 Bug Fixes & Optimizations**
+
+- **Fixed `LiveTime` performance issues** – Now updates **efficiently** with minimal redraws. 🕒
+- **Improved memory efficiency** in widgets with **better resource management**. 🔧
+- **Fixed `Map Launcher` bugs** on certain Android versions. 📍
+- **Refactored `Toast System` for better reliability and UI clarity.** 🛑
+
+---
+
+## 🔥 **Almohad Design System is Now Faster & More Powerful!**
+
+This update brings **smoother animations, enhanced user interactions, and new design possibilities** to **Flutter applications**. 🚀🎨
+
+🔄 _Stay tuned for more improvements in the next release!_ 🚀

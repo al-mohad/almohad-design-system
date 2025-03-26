@@ -31,65 +31,71 @@ class ChatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
             isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if (!isSender && showAvatar)
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: NetworkImage(message.senderAvatar ?? ''),
-              child: message.senderAvatar == null ? Icon(Icons.person) : null,
-            ),
-          SizedBox(width: showAvatar ? 8 : 0),
-          Column(
-            crossAxisAlignment:
-                isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: [
-              Card(
-                margin: EdgeInsets.all(2),
-                color:
-                    bubbleColor ??
-                    (isSender ? Colors.blue[100] : Colors.grey[300]),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                    bottomLeft: Radius.circular(isSender ? 12 : 4),
-                    bottomRight: Radius.circular(isSender ? 4 : 12),
-                  ),
-                ),
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.8,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    child: Wrap(
-                      alignment: WrapAlignment.end,
-                      children: [
-                        ChatMessageText(
-                          text: message.message,
-                          onHashtagTapped: onHashtagTapped,
-                          onTagTapped: onTagTapped,
-                          onUrlTapped: onUrlTapped,
-                          textStyle: messageTextStyle,
-                        ),
-                        TimeStatusWidget(
-                          message: message,
-                          textStyle: timeTextStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          if (!isSender && showAvatar) _buildAvatar(),
+          const SizedBox(width: 8),
+          _buildMessageBubble(context),
         ],
       ),
+    );
+  }
+
+  /// Builds the sender/receiver avatar.
+  Widget _buildAvatar() {
+    return CircleAvatar(
+      radius: 16,
+      backgroundImage:
+          message.senderAvatar != null
+              ? NetworkImage(message.senderAvatar!)
+              : null,
+      child: message.senderAvatar == null ? const Icon(Icons.person) : null,
+    );
+  }
+
+  /// Builds the chat bubble UI.
+  Widget _buildMessageBubble(BuildContext context) {
+    return Column(
+      crossAxisAlignment:
+          isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Card(
+          margin: EdgeInsets.zero,
+          color:
+              bubbleColor ?? (isSender ? Colors.blue[100] : Colors.grey[300]),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(12),
+              topRight: const Radius.circular(12),
+              bottomLeft: Radius.circular(isSender ? 12 : 4),
+              bottomRight: Radius.circular(isSender ? 4 : 12),
+            ),
+          ),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.75,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ChatMessageText(
+                  text: message.message,
+                  onHashtagTapped: onHashtagTapped,
+                  onTagTapped: onTagTapped,
+                  onUrlTapped: onUrlTapped,
+                  textStyle: messageTextStyle,
+                ),
+                TimeStatusWidget(message: message, textStyle: timeTextStyle),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

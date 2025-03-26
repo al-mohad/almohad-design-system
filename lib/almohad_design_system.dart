@@ -22,8 +22,25 @@ class DesignSystem {
   static Widget chatBubble({
     required ChatMessage message,
     required bool isSender,
+    bool showAvatar = true,
+    Function(String)? onHashtagTapped,
+    Function(String)? onTagTapped,
+    Function(String)? onUrlTapped,
+    Color? bubbleColor,
+    TextStyle? messageTextStyle,
+    TextStyle? timeTextStyle,
   }) {
-    return ChatWidget(message: message, isSender: isSender);
+    return ChatWidget(
+      message: message,
+      isSender: isSender,
+      showAvatar: showAvatar,
+      onHashtagTapped: onHashtagTapped,
+      onTagTapped: onTagTapped,
+      onUrlTapped: onUrlTapped,
+      bubbleColor: bubbleColor,
+      messageTextStyle: messageTextStyle,
+      timeTextStyle: timeTextStyle,
+    );
   }
 
   /// A chat bubble widget with different styles
