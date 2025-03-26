@@ -18,7 +18,6 @@ export 'src/src.dart';
 /// **DesignSystem** - A centralized class for reusable UI components
 class DesignSystem {
   DesignSystem._(); // Prevent instantiation
-
   /// A chat bubble widget with different styles
   static Widget chatBubble({
     required ChatMessage message,
@@ -32,19 +31,37 @@ class DesignSystem {
     TextStyle? timeTextStyle,
     ChatWidgetType? type,
     Function(List<String>, int)? onImagePreview,
+    ImageViewType? viewType,
+    Color? textColor,
+    Color? timestampColor,
+    Color? avatarBackgroundColor,
+    double? avatarRadius,
+    EdgeInsets? bubblePadding,
+    EdgeInsets? chatPadding,
+    BorderRadius? bubbleRadius,
+    TextStyle? usernameTextStyle,
   }) {
     return ChatWidget(
       message: message,
       isSender: isSender,
       showAvatar: showAvatar,
-      chatWidgetType: type,
       onHashtagTapped: onHashtagTapped,
       onTagTapped: onTagTapped,
       onUrlTapped: onUrlTapped,
       bubbleColor: bubbleColor,
       messageTextStyle: messageTextStyle,
       timeTextStyle: timeTextStyle,
+      chatWidgetType: type,
       onImagePreview: onImagePreview,
+      imageViewType: viewType,
+      textColor: textColor,
+      timestampColor: timestampColor,
+      avatarBackgroundColor: avatarBackgroundColor,
+      avatarRadius: avatarRadius,
+      bubblePadding: bubblePadding,
+      chatPadding: chatPadding,
+      bubbleRadius: bubbleRadius,
+      usernameTextStyle: usernameTextStyle,
     );
   }
 

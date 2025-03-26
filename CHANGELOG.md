@@ -164,3 +164,5 @@ Upgrade now and enjoy the enhancements!
 ## 0.0.9 - \_Major Improvements 🚀🎉
 
 ## 0.1.0 - \_Major Improvements 🚀🎉
+
+## 0.1.1 - \_Major Improvements 🚀🎉

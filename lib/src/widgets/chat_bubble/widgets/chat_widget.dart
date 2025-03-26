@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../almohad_design_system.dart';
 import 'chat_message_text.dart';
 
 enum ChatWidgetType { text, image, audio }
+
+enum ImageViewType { grid, list }
 
 class ChatWidget extends StatelessWidget {
   final ChatMessage message;
@@ -14,7 +17,6 @@ class ChatWidget extends StatelessWidget {
   final Function(String)? onUrlTapped;
   final Function(List<String>, int)? onImagePreview;
 
-  // Customization
   final Color? bubbleColor;
   final Color? textColor;
   final Color? timestampColor;
@@ -28,6 +30,7 @@ class ChatWidget extends StatelessWidget {
   final TextStyle? usernameTextStyle;
 
   final ChatWidgetType? chatWidgetType;
+  final ImageViewType? imageViewType;
 
   const ChatWidget({
     super.key,
@@ -53,6 +56,7 @@ class ChatWidget extends StatelessWidget {
     this.timeTextStyle,
     this.usernameTextStyle,
     this.chatWidgetType,
+    this.imageViewType,
   });
 
   @override
@@ -72,7 +76,6 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Builds the sender's avatar, shown only if `isSender` is `false`
   Widget _buildAvatar() {
     return CircleAvatar(
       radius: avatarRadius,
@@ -88,7 +91,6 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Builds the chat bubble with appropriate message content
   Widget _buildChatBubble(BuildContext context) {
     return Column(
       crossAxisAlignment:
@@ -110,7 +112,6 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Decides which content to show (text, image, or audio)
   Widget _buildMessageContent(BuildContext context) {
     switch (chatWidgetType) {
       case ChatWidgetType.text:
@@ -120,11 +121,10 @@ class ChatWidget extends StatelessWidget {
       case ChatWidgetType.image:
         return _buildImageMessage(context);
       default:
-        return _buildTextMessage(); // Fallback to text
+        return _buildTextMessage();
     }
   }
 
-  /// Builds a text message
   Widget _buildTextMessage() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,47 +150,65 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Builds an audio message with an inline player
   Widget _buildAudioMessage() {
-    return Column(
-      children: [
-        DesignSystem.audioPlayer(
-          isSender: isSender,
-          audioUrl: message.audioUrl ?? '',
-          audioTitle: 'Voice Message',
-          showUserAvatar: !isSender && showAvatar,
-          userAvatar: message.senderAvatar,
-          backgroundColor: Colors.blue.shade200,
-          doneColor: Colors.green,
-          time: message.time,
-          status: message.status,
-        ),
-      ],
+    return DesignSystem.audioPlayer(
+      isSender: isSender,
+      audioUrl: message.audioUrl ?? '',
+      audioTitle: 'Voice Message',
+      showUserAvatar: !isSender && showAvatar,
+      userAvatar: message.senderAvatar,
+      backgroundColor: Colors.blue.shade200,
+      doneColor: Colors.green,
+      time: message.time,
+      status: message.status,
     );
   }
 
-  /// Builds an image message with a preview feature
   Widget _buildImageMessage(BuildContext context) {
     final images = message.imageUrls ?? [];
-    return Wrap(
-      spacing: 4,
-      runSpacing: 4,
-      children: [
-        for (int i = 0; i < (images.length > 3 ? 3 : images.length); i++)
-          _buildImageThumbnail(images, i),
-        if (images.length > 3) _buildMoreImagesOverlay(images),
-      ],
-    );
+    if (imageViewType == ImageViewType.list) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+            images.map((url) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: GestureDetector(
+                  onTap:
+                      () => onImagePreview?.call(images, images.indexOf(url)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      url,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+      );
+    } else {
+      return Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: [
+          for (int i = 0; i < (images.length > 3 ? 3 : images.length); i++)
+            _buildImageThumbnail(images, i),
+          if (images.length > 3) _buildMoreImagesOverlay(images),
+        ],
+      );
+    }
   }
 
-  /// Builds a single image thumbnail
   Widget _buildImageThumbnail(List<String> images, int index) {
     return GestureDetector(
       onTap: () => onImagePreview?.call(images, index),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          images[index],
+        child: CachedNetworkImage(
+          imageUrl: images[index],
           width: 80,
           height: 80,
           fit: BoxFit.cover,
@@ -199,7 +217,6 @@ class ChatWidget extends StatelessWidget {
     );
   }
 
-  /// Shows `+X more` overlay when more than 4 images exist
   Widget _buildMoreImagesOverlay(List<String> images) {
     return GestureDetector(
       onTap: () => onImagePreview?.call(images, 3),
@@ -207,8 +224,8 @@ class ChatWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              images[3],
+            child: CachedNetworkImage(
+              imageUrl: images[3],
               width: 80,
               height: 80,
               fit: BoxFit.cover,
@@ -218,7 +235,7 @@ class ChatWidget extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.6),
+              color: Colors.black.withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
