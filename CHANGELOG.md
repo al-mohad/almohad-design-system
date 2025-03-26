@@ -160,3 +160,5 @@ This update makes **UI interactions more dynamic, chat experiences richer, and p
 Upgrade now and enjoy the enhancements!
 
 📌 _Next update: More animations, gesture-based interactions & AI-powered UI components!_ 🚀
+
+## 0.0.9 - \_Major Improvements 🚀🎉

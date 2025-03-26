@@ -30,11 +30,14 @@ class DesignSystem {
     Color? bubbleColor,
     TextStyle? messageTextStyle,
     TextStyle? timeTextStyle,
+    ChatWidgetType? type,
   }) {
     return ChatWidget(
       message: message,
       isSender: isSender,
       showAvatar: showAvatar,
+      chatWidgetType: type,
+
       onHashtagTapped: onHashtagTapped,
       onTagTapped: onTagTapped,
       onUrlTapped: onUrlTapped,
