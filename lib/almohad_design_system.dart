@@ -4,6 +4,7 @@ import 'package:almohad_design_system/src/widgets/audio_message/audio_message.da
 import 'package:almohad_design_system/src/widgets/layouts/loading_overlay.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:map_launcher/map_launcher.dart';
 
 import 'src/src.dart';
@@ -502,4 +503,67 @@ class DesignSystem {
   // loadingoverlay
   static Widget overlayLoading({required bool isBusy, required Widget child}) =>
       LoadingOverlay(isBusy: isBusy, child: child);
+
+  /// **Formats a `DateTime` object to a time string based on the user's 12/24-hour format setting.**
+  ///
+  /// - **Example (12-hour format)**: `"2:30 PM"`
+  /// - **Example (24-hour format)**: `"14:30"`
+  ///
+  /// ### **Usage**
+  /// ```dart
+  /// String time = DesignSystem.formatTime(DateTime.now(), context);
+  /// print(time); // Output: "3:45 PM" (or "15:45" in 24-hour format)
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - `datetime`: The `DateTime` object to format.
+  /// - `context`: The `BuildContext` to determine if 24-hour format is used.
+  ///
+  /// **Returns:** A formatted time string.
+  static String formatTime(DateTime datetime, BuildContext context) {
+    bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+    return is24HourFormat
+        ? DateFormat.Hm().format(datetime) // 24-hour format: "14:30"
+        : DateFormat.jm().format(datetime); // 12-hour format: "2:30 PM"
+  }
+
+  /// **Formats a `DateTime` object to a human-readable date string.**
+  ///
+  /// - **Example Output**: `"Mar 25, 2025"`
+  ///
+  /// ### **Usage**
+  /// ```dart
+  /// String date = DesignSystem.formatDate(DateTime.now());
+  /// print(date); // Output: "Mar 25, 2025"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - `dateTime`: The `DateTime` object to format.
+  ///
+  /// **Returns:** A formatted date string.
+  static String formatDate(DateTime dateTime) {
+    return DateFormat(
+      'MMM dd, yyyy',
+    ).format(dateTime); // Example: "Mar 25, 2025"
+  }
+
+  /// **Formats a `DateTime` object to a full date-time string (YYYY-MM-DD HH:mm).**
+  ///
+  /// - **Example Output**: `"2025-03-25 14:30"`
+  ///
+  /// ### **Usage**
+  /// ```dart
+  /// String dateTime = DesignSystem.formatDateTime(DateTime.now());
+  /// print(dateTime); // Output: "2025-03-25 14:30"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - `dateTime`: The `DateTime` object to format.
+  ///
+  /// **Returns:** A formatted date-time string.
+  static String formatDateTime(DateTime dateTime) {
+    return DateFormat(
+      'yyyy-MM-dd HH:mm',
+    ).format(dateTime); // Example: "2025-03-25 14:30"
+  }
 }

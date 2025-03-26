@@ -1,7 +1,6 @@
-import 'package:almohad_design_system/src/widgets/chat_bubble/models/message.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/format_time.dart' show formatChatTime;
+import '../../../../almohad_design_system.dart';
 
 class TimeStatusWidget extends StatelessWidget {
   final ChatMessage message;
@@ -18,7 +17,10 @@ class TimeStatusWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 5.0),
             child: Text(
-              formatChatTime(datetime: message.time, context: context),
+              CustomDateHelper.formatTime(
+                datetime: message.time,
+                context: context,
+              ),
               style: textStyle ?? Theme.of(context).textTheme.bodySmall,
             ),
           ),

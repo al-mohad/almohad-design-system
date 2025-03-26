@@ -19,62 +19,21 @@ class ChatMessageText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RegExp regex = RegExp(r'(#\w+|@\w+|https?://\S+|\b\d+\b)');
+    final RegExp regex = RegExp(r'(#[\w]+|@[\w]+|https?://[^\s]+|\b\d+\b)');
     final List<TextSpan> spans = [];
 
     text.splitMapJoin(
       regex,
       onMatch: (Match match) {
-        String matchText = match.group(0)!;
-        if (matchText.startsWith('#')) {
-          spans.add(
-            TextSpan(
-              text: matchText,
-              style:
-                  textStyle ??
-                  TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => onHashtagTapped?.call(matchText),
-            ),
-          );
-        } else if (matchText.startsWith('@')) {
-          spans.add(
-            TextSpan(
-              text: matchText,
-              style:
-                  textStyle ??
-                  TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => onTagTapped?.call(matchText),
-            ),
-          );
-        } else if (Uri.tryParse(matchText)?.hasAbsolutePath ?? false) {
-          spans.add(
-            TextSpan(
-              text: matchText,
-              style:
-                  textStyle ??
-                  TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
-                  ),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => onUrlTapped?.call(matchText),
-            ),
-          );
-        } else {
-          spans.add(
-            TextSpan(
-              text: matchText,
-              style:
-                  textStyle ??
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-          );
-        }
+        final String matchText = match.group(0)!;
+
+        spans.add(
+          TextSpan(
+            text: matchText,
+            style: _getStyle(matchText),
+            recognizer: _getRecognizer(matchText),
+          ),
+        );
         return matchText;
       },
       onNonMatch: (String nonMatch) {
@@ -89,5 +48,51 @@ class ChatMessageText extends StatelessWidget {
         children: spans,
       ),
     );
+  }
+
+  /// Determines the appropriate text style based on the content type
+  TextStyle _getStyle(String text) {
+    if (text.startsWith('#')) {
+      return textStyle?.copyWith(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ) ??
+          const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold);
+    } else if (text.startsWith('@')) {
+      return textStyle?.copyWith(
+            color: Colors.purple,
+            fontWeight: FontWeight.bold,
+          ) ??
+          const TextStyle(color: Colors.purple, fontWeight: FontWeight.bold);
+    } else if (Uri.tryParse(text)?.hasAbsolutePath ?? false) {
+      return textStyle?.copyWith(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+          ) ??
+          const TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+          );
+    } else {
+      return textStyle ?? const TextStyle(color: Colors.black);
+    }
+  }
+
+  /// Determines the appropriate tap action based on content type
+  GestureRecognizer? _getRecognizer(String text) {
+    if (text.startsWith('#')) {
+      return (onHashtagTapped != null)
+          ? (TapGestureRecognizer()..onTap = () => onHashtagTapped!(text))
+          : null;
+    } else if (text.startsWith('@')) {
+      return (onTagTapped != null)
+          ? (TapGestureRecognizer()..onTap = () => onTagTapped!(text))
+          : null;
+    } else if (Uri.tryParse(text)?.hasAbsolutePath ?? false) {
+      return (onUrlTapped != null)
+          ? (TapGestureRecognizer()..onTap = () => onUrlTapped!(text))
+          : null;
+    }
+    return null;
   }
 }

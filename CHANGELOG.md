@@ -106,3 +106,57 @@ This update brings **smoother animations, enhanced user interactions, and new de
 🔄 _Stay tuned for more improvements in the next release!_ 🚀
 
 ## 0.0.7 - \_Major Improvements 🚀🎉
+
+# Changelog
+
+## 0.0.8 - 🚀
+
+### ✨ What’s New in 0.0.8?
+
+- **🔥 Performance Enhancements** – Optimized key UI components for better speed & efficiency.
+- **🎨 New UI Widgets** – Added **Swipe Actions**, **Custom Animations**, and **Enhanced Chat Bubbles**.
+- **📢 Improved Accessibility** – Better **keyboard navigation**, **screen reader support**, and **contrast updates**.
+- **📌 Breaking Changes** – Minor adjustments to `button` and `overlayLoading` API.
+
+---
+
+### 🆕 New Features & Enhancements
+
+#### 💬 Chat Bubble (`chatBubble`)
+
+- Now supports **markdown-like formatting** for text styling.
+- Optimized **tappable mentions** (`@user`), hashtags (`#topic`), and **auto-linking URLs**.
+
+#### 🎵 Advanced Audio Player (`audioPlayer`)
+
+- **Waveform visualization** for playing audio messages.
+- **Background playback support** & improved seek functionality.
+
+#### 🖼️ Image Enhancements (`imagePreview`)
+
+- Now supports **gesture-based zooming & panning**.
+- Added **auto-thumbnail generation** for improved performance.
+
+#### 🛠️ Utility Improvements
+
+- **New `DateHelper` methods** → Better **date/time formatting & localization**.
+- **`toastCustom` enhancements** → More customizable icon & animation options.
+- **Dynamic Shadow (`shadowEffect`)** → New **depth, blur, and color blending** options.
+
+---
+
+### 🐛 Bug Fixes & Optimizations
+
+- **Fixed `LiveTime` high CPU usage issue** 🕒
+- **Reduced `ChatBubble` memory footprint** for large message lists.
+- **Improved compatibility with Android 14 & iOS 17**.
+- **Optimized asset loading & lazy loading for images/icons**.
+
+---
+
+## 🔥 Almohad Design System is Smoother, Faster & More Powerful! 🚀
+
+This update makes **UI interactions more dynamic, chat experiences richer, and performance smoother**.  
+Upgrade now and enjoy the enhancements!
+
+📌 _Next update: More animations, gesture-based interactions & AI-powered UI components!_ 🚀

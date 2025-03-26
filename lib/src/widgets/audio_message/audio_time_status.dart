@@ -25,7 +25,7 @@ class AudioTimeStatus extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(
-            formatChatTime(datetime: time, context: context),
+            CustomDateHelper.formatTime(datetime: time, context: context),
             style:
                 textStyle?.copyWith(fontSize: defaultFontSize - 3) ??
                 TextStyle(
