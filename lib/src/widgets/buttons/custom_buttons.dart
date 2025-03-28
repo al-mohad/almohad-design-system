@@ -69,7 +69,8 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     final bool isPrimary = widget.type == ButtonType.primary;
     final Color effectiveButtonColor =
-        widget.buttonColor ?? (isPrimary ? Colors.blue : Colors.transparent);
+        widget.buttonColor ??
+        (isPrimary ? Theme.of(context).primaryColor : Colors.transparent);
     final Color effectiveTextColor =
         widget.textColor ?? (isPrimary ? Colors.white : Colors.black);
 

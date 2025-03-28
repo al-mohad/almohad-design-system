@@ -1,6 +1,6 @@
 name: almohad_design_system
 description: A personalized design system for Flutter applications, providing reusable UI components like buttons, cards, chat bubbles, and more.
-version: 0.1.6
+version: 0.1.7
 homepage: https://github.com/al-mohad/almohad-design-system
 
 environment:

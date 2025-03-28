@@ -183,8 +183,6 @@ Upgrade now and enjoy the enhancements!
 
 ## 0.1.5 - Updates 🚀
 
-# Changelog
-
 ## 0.1.6 - 🚀 Enhancements & Fixes
 
 ### ✨ What's New?
@@ -204,6 +202,12 @@ Upgrade now and enjoy the enhancements!
 - **Resolved `imagePreview` zoom inconsistencies** on some devices. 🖼️
 - **Minor UI adjustments for better responsiveness.**
 
----
+## 0.1.7 - 🚀 Enhancements & Fixes
 
-🚀 Almohad Design System keeps evolving—expect more animations, gesture-based interactions, and AI-powered UI enhancements in the next release! 🎨🔥
+### 🛠️ Improvements
+
+- **Performance Boost:** Optimized widget rendering for smoother UI interactions. ⚡
+
+### 🐛 Bug Fixes
+
+- **Minor UI adjustments for better responsiveness.**
