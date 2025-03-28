@@ -2,12 +2,14 @@ import 'package:almohad_design_system/src/utils/dialogs.dart';
 import 'package:almohad_design_system/src/utils/map_luancher.dart';
 import 'package:almohad_design_system/src/widgets/audio_message/audio_message.dart';
 import 'package:almohad_design_system/src/widgets/layouts/loading_overlay.dart';
+import 'package:almohad_design_system/src/widgets/others/label_divider.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:map_launcher/map_launcher.dart';
 
 import 'src/src.dart';
+import 'src/utils/color_strength.dart';
 import 'src/utils/copy_to_clipboard.dart';
 import 'src/widgets/container/custom_container.dart';
 import 'src/widgets/others/parallax_image.dart';
@@ -121,7 +123,7 @@ class DesignSystem {
   /// A text field widget with different styles
   static Widget textField({
     required String label,
-    required String hintText,
+    String? hintText,
     TextEditingController? controller,
     TextInputType keyboardType = TextInputType.text,
     bool obscureText = false,
@@ -139,11 +141,15 @@ class DesignSystem {
       horizontal: 16,
       vertical: 8,
     ),
+    int? maxLength,
+    int? maxLines,
   }) {
     return CustomTextField(
       label: label,
       hintText: hintText,
       controller: controller,
+      maxLength: maxLength,
+      maxLines: maxLines,
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: obscuringCharacter,
@@ -152,7 +158,7 @@ class DesignSystem {
       onSuffixIconTap: onSuffixIconTap,
       validator: validator,
       onChanged: onChanged,
-      textStyle: textStyle,
+      textStyle: textStyle ?? const TextStyle(),
       borderColor: borderColor,
       focusedBorderColor: focusedBorderColor,
       borderRadius: borderRadius,
@@ -284,9 +290,9 @@ class DesignSystem {
 
   static Widget avatar({
     required String imagePath,
-    required String? errorImagePath,
-    required double? size,
-    required AvatarType? type,
+    String? errorImagePath = 'https://i.pravatar.cc',
+    double? size = 24,
+    AvatarType? type = AvatarType.rounded,
     bool isAsset = false,
   }) => CustomAvatar(
     imageUrl: imagePath,
@@ -611,4 +617,32 @@ class DesignSystem {
       'yyyy-MM-dd HH:mm',
     ).format(dateTime); // Example: "2025-03-25 14:30"
   }
+
+  static Color strengthenColor({
+    required Color color,
+    required double factor,
+  }) => getStrengthenColor(color: color, factor: factor);
+
+  static Color randomColor({double opacity = 1.0}) =>
+      getRandomColor(opacity: opacity);
+
+  static Widget labelDivider({
+    required String label,
+    double? thickness,
+    Color? color,
+    double? spacing,
+    TextStyle? textStyle,
+  }) => LabeledDivider(
+    label: label,
+    textStyle:
+        textStyle ??
+        const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF000000),
+        ),
+    thickness: thickness ?? 2.0,
+    spacing: spacing ?? 8.0,
+    color: color ?? const Color(0xFF888888),
+  );
 }

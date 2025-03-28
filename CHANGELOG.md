@@ -182,3 +182,28 @@ Upgrade now and enjoy the enhancements!
 - **Fixed minor alignment issues.**
 
 ## 0.1.5 - Updates 🚀
+
+# Changelog
+
+## 0.1.6 - 🚀 Enhancements & Fixes
+
+### ✨ What's New?
+
+- **New Widget:** `LabeledDivider` – A customizable divider with a label for better UI separation. ✂️
+- **New Utility:** `handleBackGesture` now supports **custom navigation callbacks**. 🔙
+
+### 🛠️ Improvements
+
+- **Performance Boost:** Optimized widget rendering for smoother UI interactions. ⚡
+- **Chat Enhancements:** Improved `chatBubble` UI and added **support for emoji reactions**. 💬
+- **Refactored `toastCustom`** to support **longer messages & auto-dismiss options**. 🔔
+
+### 🐛 Bug Fixes
+
+- **Fixed `overlayLoading` flickering issue** on slow network connections.
+- **Resolved `imagePreview` zoom inconsistencies** on some devices. 🖼️
+- **Minor UI adjustments for better responsiveness.**
+
+---
+
+🚀 Almohad Design System keeps evolving—expect more animations, gesture-based interactions, and AI-powered UI enhancements in the next release! 🎨🔥

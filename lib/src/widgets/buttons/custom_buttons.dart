@@ -82,15 +82,17 @@ class _CustomButtonState extends State<CustomButton> {
           widget.icon!,
           const SizedBox(width: 8),
         ],
-        Text(
-          widget.text,
-          style:
-              widget.textStyle ??
-              TextStyle(
-                color: effectiveTextColor,
-                fontSize: widget.fontSize ?? 16,
-                fontWeight: widget.fontWeight ?? FontWeight.w600,
-              ),
+        Expanded(
+          child: Text(
+            widget.text,
+            style:
+                widget.textStyle ??
+                TextStyle(
+                  color: effectiveTextColor,
+                  fontSize: widget.fontSize ?? 16,
+                  fontWeight: widget.fontWeight ?? FontWeight.w600,
+                ),
+          ),
         ),
         if (widget.icon != null && widget.iconAffinity == IconAffinity.end) ...[
           const SizedBox(width: 8),
