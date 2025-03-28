@@ -83,7 +83,7 @@ class _CustomButtonState extends State<CustomButton> {
           widget.icon!,
           const SizedBox(width: 8),
         ],
-        Expanded(
+        Flexible(
           child: Text(
             widget.text,
             style:

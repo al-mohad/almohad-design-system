@@ -211,3 +211,36 @@ Upgrade now and enjoy the enhancements!
 ### 🐛 Bug Fixes
 
 - **Minor UI adjustments for better responsiveness.**
+
+## 0.1.8 - 🚀 Enhancements & Fixes
+
+### ✨ What's New?
+
+- **New Widgets:**
+  - **TagInputField:** `TagInputField` – A customizable text field supporting multiple tags with auto-suggestions. 🏷️
+  - **AnimatedSwitcherWrapper:** `AnimatedSwitcherWrapper` – Easily add smooth transitions to widget changes. 🔄
+  - **Cyberpunk** – A futuristic widget with vibrant neon gradients and dynamic shadows. 🌌
+  - **Depth** – Adds a 3D depth effect to any widget with customizable shadow intensity. 🏞️
+  - **Isometric** – A widget that applies an isometric 3D transformation effect. 🔳
+  - **RetroFuturism** – A gradient-based widget with retro-futuristic vibes, complete with neon-inspired box shadows. 🛸
+  - **Skeuomorphis** – A skeuomorphic widget with realistic textures (e.g., wood or leather) and dynamic shadows. 🪵
+
+### 🛠️ Improvements
+
+- **Chat Enhancements:**
+
+  - `chatBubble` now supports **message reactions** (like, love, laugh, etc.). ❤️😂
+  - Improved text parsing for **mentions (`@user`) and hashtags (`#topic`)**.
+  - Added **auto-scroll to the latest message** in chat views.
+
+- **UI/UX Enhancements:**
+  - Improved responsiveness of `button` animations for better fluidity.
+  - `overlayLoading` now supports **custom loading indicators**.
+
+### 🐛 Bug Fixes
+
+- **Fixed `toastCustom` auto-dismiss issues** on certain Android versions.
+- **Resolved `imagePreview` gesture conflicts** when zooming and panning.
+- **Fixed occasional crashes** when using `LiveTime` with invalid date formats.
+
+🚀 _Upgrade now for a smoother, more interactive UI experience!_

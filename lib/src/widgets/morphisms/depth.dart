@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 
-class Claymorphism extends StatelessWidget {
+class Depth extends StatelessWidget {
   final Widget child;
   final double depth;
   final Color color;
   final double borderRadius;
-  final double blurRadius;
+  final Color shadowColor;
+  final Color highlightColor;
   final double offsetX;
   final double offsetY;
-  final Color? shadowColor;
-  final Gradient? gradient;
+  final double blurRadius;
 
-  const Claymorphism({
+  const Depth({
     super.key,
     required this.child,
-    this.depth = 10.0,
-    this.color = Colors.grey,
-    this.borderRadius = 20.0,
-    this.blurRadius = 10.0,
+    this.depth = 15.0,
+    this.color = Colors.white,
+    this.borderRadius = 25.0,
+    this.shadowColor = const Color(0x33000000), // Semi-transparent black
+    this.highlightColor = const Color(0x99FFFFFF), // Semi-transparent white
     this.offsetX = 5.0,
     this.offsetY = 5.0,
-    this.shadowColor = Colors.grey,
-    this.gradient,
+    this.blurRadius = 15.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: gradient,
         color: color,
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
-            color: shadowColor ?? Colors.grey[500]!,
+            color: shadowColor,
             offset: Offset(offsetX, offsetY),
             blurRadius: blurRadius,
           ),
           BoxShadow(
-            color: Colors.white,
+            color: highlightColor,
             offset: Offset(-offsetX, -offsetY),
             blurRadius: blurRadius,
           ),

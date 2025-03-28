@@ -39,6 +39,9 @@ class ChatWidget extends StatelessWidget {
   final double? imageThumbnailHeight;
   final double? listImageHeight;
 
+  final List<String>? reactions;
+  final VoidCallback? onReactionTap;
+
   const ChatWidget({
     super.key,
     required this.message,
@@ -64,6 +67,8 @@ class ChatWidget extends StatelessWidget {
     this.imageThumbnailWidth,
     this.imageThumbnailHeight,
     this.listImageHeight,
+    this.reactions,
+    this.onReactionTap,
   });
 
   @override
@@ -124,7 +129,19 @@ class ChatWidget extends StatelessWidget {
             child: _buildMessageContent(context),
           ),
         ),
+        if (reactions != null) _buildReactionsBar(),
       ],
+    );
+  }
+
+  // Build reaction bar below the message
+  Widget _buildReactionsBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children:
+          reactions!.map((reaction) {
+            return IconButton(icon: Text(reaction), onPressed: onReactionTap);
+          }).toList(),
     );
   }
 

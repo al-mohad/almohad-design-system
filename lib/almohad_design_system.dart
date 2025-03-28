@@ -1,7 +1,14 @@
 import 'package:almohad_design_system/src/utils/dialogs.dart';
 import 'package:almohad_design_system/src/utils/map_luancher.dart';
+import 'package:almohad_design_system/src/widgets/animations/animated_switcher.dart';
 import 'package:almohad_design_system/src/widgets/audio_message/audio_message.dart';
+import 'package:almohad_design_system/src/widgets/inputs/tag_input.dart';
 import 'package:almohad_design_system/src/widgets/layouts/loading_overlay.dart';
+import 'package:almohad_design_system/src/widgets/morphisms/cyber_punk.dart';
+import 'package:almohad_design_system/src/widgets/morphisms/depth.dart';
+import 'package:almohad_design_system/src/widgets/morphisms/isometric.dart';
+import 'package:almohad_design_system/src/widgets/morphisms/retro_futurism.dart';
+import 'package:almohad_design_system/src/widgets/morphisms/skeuomorphism.dart';
 import 'package:almohad_design_system/src/widgets/others/label_divider.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -120,38 +127,143 @@ class DesignSystem {
     return CustomChatInput(textEditingController: textController);
   }
 
-  /// A text field widget with different styles
+  /// A customizable text field widget supporting multiple input types.
+  ///
+  /// This widget adapts based on the `fieldType` to provide tailored input behavior.
+  /// It supports various input types, including standard text input, passwords with toggle visibility,
+  /// multi-line text, numbers, email, URLs, search, and even date/time pickers.
+  ///
+  /// The `CustomTextFieldType` enum determines the input type:
+  /// - `text`: Standard single-line text input.
+  /// - `multiText`: Multi-line text field.
+  /// - `password`: Secure password input with toggle visibility.
+  /// - `email`: Email input with an appropriate keyboard type.
+  /// - `phone`: Numeric phone input.
+  /// - `number`: Integer-only input.
+  /// - `decimal`: Decimal number input.
+  /// - `url`: URL input with the correct keyboard type.
+  /// - `search`: Text input with a search icon and submission action.
+  /// - `date`: Opens a date picker when tapped.
+  /// - `time`: Opens a time picker when tapped.
+  ///
+  /// ### Example Usage:
+  /// #### Standard Email Field:
+  /// ```dart
+  /// textField(
+  ///   label: "Email",
+  ///   fieldType: CustomTextFieldType.email,
+  ///   prefixIcon: Icons.email,
+  /// )
+  /// ```
+  ///
+  /// #### Password Field with Toggle Visibility:
+  /// ```dart
+  /// textField(
+  ///   label: "Password",
+  ///   fieldType: CustomTextFieldType.password,
+  ///   prefixIcon: Icons.lock,
+  ///   suffixIcon: Icons.visibility,
+  ///   onSuffixIconTap: () {
+  ///     // Toggle password visibility logic
+  ///   },
+  /// )
+  /// ```
+  ///
   static Widget textField({
+    /// The label displayed above the text field.
     required String label,
+
+    /// The hint text displayed inside the text field.
     String? hintText,
+
+    /// The controller used to manage the text field’s value.
     TextEditingController? controller,
-    TextInputType keyboardType = TextInputType.text,
+
+    /// The type of the text field, which determines its behavior.
+    ///
+    /// Defaults to `CustomTextFieldType.text`.
+    CustomTextFieldType fieldType = CustomTextFieldType.text,
+
+    /// Whether the text should be obscured (typically used for passwords).
+    ///
+    /// Defaults to `false`. If `fieldType` is `CustomTextFieldType.password`,
+    /// this will automatically be `true`.
     bool obscureText = false,
-    String obscuringCharacter = '●', // Default: Big dot
+
+    /// The character used to obscure text in password fields.
+    ///
+    /// Defaults to '●'.
+    String obscuringCharacter = '●',
+
+    /// The icon displayed at the start of the text field.
     IconData? prefixIcon,
+
+    /// The icon displayed at the end of the text field.
+    ///
+    /// Typically used for password visibility toggles or search actions.
     IconData? suffixIcon,
+
+    /// Callback function triggered when the suffix icon is tapped.
+    ///
+    /// Useful for toggling password visibility or clearing search input.
     VoidCallback? onSuffixIconTap,
+
+    /// Function for validating the text field’s input.
+    ///
+    /// It returns an error message string if validation fails, otherwise `null`.
     String? Function(String?)? validator,
+
+    /// Callback function triggered when the text changes.
+    ///
+    /// It provides the current input value as a parameter.
     void Function(String)? onChanged,
+
+    /// The text style for the input text.
+    ///
+    /// Defaults to the theme's body text style if not provided.
     TextStyle? textStyle,
+
+    /// The border color of the text field when it is not focused.
+    ///
+    /// If not provided, it defaults to the primary color from the theme.
     Color? borderColor,
+
+    /// The border color when the text field is focused.
+    ///
+    /// If not provided, it defaults to the secondary color from the theme.
     Color? focusedBorderColor,
+
+    /// The border radius of the text field.
+    ///
+    /// Defaults to `12.0` for rounded corners.
     double borderRadius = 12,
+
+    /// Padding around the text field.
+    ///
+    /// Defaults to `EdgeInsets.symmetric(horizontal: 16, vertical: 8)`.
     EdgeInsets padding = const EdgeInsets.symmetric(
       horizontal: 16,
       vertical: 8,
     ),
+
+    /// The maximum number of characters allowed in the text field.
+    ///
+    /// If `null`, there is no limit.
     int? maxLength,
+
+    /// The maximum number of lines allowed in the text field.
+    ///
+    /// If `fieldType` is `CustomTextFieldType.multiText`, this will default to unlimited lines.
     int? maxLines,
   }) {
     return CustomTextField(
       label: label,
       hintText: hintText,
       controller: controller,
+      fieldType: fieldType,
       maxLength: maxLength,
       maxLines: maxLines,
-      keyboardType: keyboardType,
-      obscureText: obscureText,
+      obscureText: fieldType == CustomTextFieldType.password || obscureText,
       obscuringCharacter: obscuringCharacter,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
@@ -230,13 +342,198 @@ class DesignSystem {
   );
 
   /// A glass morphic widget
-  static Widget glass({required Widget child}) => Glassmorphism(child: child);
+  static Widget glass({
+    required Widget child,
+    double? blur,
+    double? opacity,
+    Color? borderColor,
+    double? borderRadius,
+    double? borderWidth,
+  }) => Glassmorphism(
+    blur: blur,
+    opacity: opacity,
+    borderColor: borderColor,
+    borderRadius: borderRadius,
+    borderWidth: borderWidth,
+    child: child,
+  );
 
   /// A glass claymorphic widget
-  static Widget clay({required Widget child}) => Claymorphism(child: child);
+  static Widget claymorphism({
+    required Widget child,
+    double depth = 10.0,
+    Color color = Colors.grey,
+    double borderRadius = 20.0,
+    double blurRadius = 10.0,
+    double offsetX = 5.0,
+    double offsetY = 5.0,
+    Color? shadowColor,
+    Gradient? gradient,
+  }) {
+    return Claymorphism(
+      depth: depth,
+      color: color,
+      borderRadius: borderRadius,
+      blurRadius: blurRadius,
+      offsetX: offsetX,
+      offsetY: offsetY,
+      shadowColor: shadowColor,
+      gradient: gradient,
+      child: child,
+    );
+  }
 
   /// A glass neumorphic widget
-  static Widget neu({required Widget child}) => Neumorphism(child: child);
+  static Widget neumorphism({
+    required Widget child,
+    double depth = 10.0,
+    Color color = Colors.grey,
+    double borderRadius = 20.0,
+    Color shadowColor = Colors.black,
+    Color highlightColor = Colors.white,
+    double blurRadius = 10.0,
+    double offsetX = 5.0,
+    double offsetY = 5.0,
+    Gradient? gradient,
+  }) {
+    return Neumorphism(
+      depth: depth,
+      color: color,
+      borderRadius: borderRadius,
+      shadowColor: shadowColor,
+      highlightColor: highlightColor,
+      blurRadius: blurRadius,
+      offsetX: offsetX,
+      offsetY: offsetY,
+      gradient: gradient,
+      child: child,
+    );
+  }
+
+  /// A static method to easily create a Cyberpunk-style widget
+  ///
+  /// The `cyberpunk` method provides a simplified way to wrap any child widget with
+  /// a cyberpunk-themed container, with customizable gradient, shadows, and more.
+  ///
+  /// [borderRadius] controls the border radius of the container.
+  /// [gradientColors] defines the start and end colors of the gradient.
+  /// [boxShadow] adds a shadow effect to the widget.
+  /// [gradientBegin] and [gradientEnd] set the direction of the gradient.
+  static Widget cyberpunk({
+    required Widget child,
+    double borderRadius = 15.0,
+    List<Color> gradientColors = const [Colors.pinkAccent, Colors.blueAccent],
+    BoxShadow boxShadow = const BoxShadow(
+      color: Colors.blueAccent,
+      offset: Offset(0, 4),
+      blurRadius: 10,
+    ),
+    AlignmentGeometry gradientBegin = Alignment.topLeft,
+    AlignmentGeometry gradientEnd = Alignment.bottomRight,
+  }) => Cyberpunk(
+    borderRadius: borderRadius,
+    gradientColors: gradientColors,
+    boxShadow: boxShadow,
+    gradientBegin: gradientBegin,
+    gradientEnd: gradientEnd,
+    child: child,
+  );
+
+  static Widget depth({
+    required Widget child,
+    double depth = 15.0,
+    Color color = Colors.white,
+    double borderRadius = 25.0,
+    Color shadowColor = const Color(0x33000000),
+    Color highlightColor = const Color(0x99FFFFFF),
+    double offsetX = 5.0,
+    double offsetY = 5.0,
+    double blurRadius = 15.0,
+  }) {
+    return Depth(
+      depth: depth,
+      color: color,
+      borderRadius: borderRadius,
+      shadowColor: shadowColor,
+      highlightColor: highlightColor,
+      offsetX: offsetX,
+      offsetY: offsetY,
+      blurRadius: blurRadius,
+      child: child,
+    );
+  }
+
+  static Widget isometric({
+    required Widget child,
+    double rotationX = 0.2,
+    double rotationY = 0.2,
+    Color color = Colors.blue,
+    double borderRadius = 15.0,
+    List<BoxShadow> boxShadow = const [
+      BoxShadow(color: Colors.black26, offset: Offset(5, 5), blurRadius: 10),
+    ],
+  }) {
+    return Isometric(
+      rotationX: rotationX,
+      rotationY: rotationY,
+      color: color,
+      borderRadius: borderRadius,
+      boxShadow: boxShadow,
+      child: child,
+    );
+  }
+
+  static Widget retroFuturism({
+    required Widget child,
+    double borderRadius = 20.0,
+    List<Color> gradientColors = const [Colors.yellowAccent, Colors.purple],
+    BoxShadow boxShadow = const BoxShadow(
+      color: Colors.pinkAccent,
+      offset: Offset(5, 5),
+      blurRadius: 15,
+    ),
+    AlignmentGeometry gradientBegin = Alignment.topLeft,
+    AlignmentGeometry gradientEnd = Alignment.bottomRight,
+    double blurRadius = 15.0,
+    double offsetX = 5.0,
+    double offsetY = 5.0,
+  }) {
+    return RetroFuturism(
+      borderRadius: borderRadius,
+      gradientColors: gradientColors,
+      boxShadow: boxShadow,
+      gradientBegin: gradientBegin,
+      gradientEnd: gradientEnd,
+      blurRadius: blurRadius,
+      offsetX: offsetX,
+      offsetY: offsetY,
+      child: child,
+    );
+  }
+
+  static Widget skeuomorphism({
+    required Widget child,
+    double borderRadius = 15.0,
+    BoxShadow boxShadow = const BoxShadow(
+      color: Colors.black,
+      offset: Offset(10, 10),
+      blurRadius: 10,
+    ),
+    required String textureAsset,
+    double shadowOpacity = 0.5,
+    double offsetX = 10.0,
+    double offsetY = 10.0,
+    double blurRadius = 10.0,
+  }) => Skeuomorphis(
+    borderRadius: borderRadius,
+    boxShadow: boxShadow,
+    textureAsset: textureAsset,
+    shadowOpacity: shadowOpacity,
+    offsetX: offsetX,
+    offsetY: offsetY,
+    blurRadius: blurRadius,
+    child: child,
+  );
 
   static Widget imageIcon({
     required String assetPath,
@@ -645,4 +942,62 @@ class DesignSystem {
     spacing: spacing ?? 8.0,
     color: color ?? const Color(0xFF888888),
   );
+
+  /// Creates a customizable Tag Input Field widget.
+  ///
+  /// This widget allows users to input multiple tags, with options to customize
+  /// colors, height, hint text, and text styling. Tags can be dynamically added
+  /// and removed.
+  ///
+  /// - [suggestions]: A list of suggested tags for auto-completion.
+  /// - [onTagsChanged]: A callback function triggered when tags are added or removed.
+  /// - [tagColor]: Background color of the tag chips. Default is `Colors.blue`.
+  /// - [textColor]: Text color inside the tag chips. Default is `Colors.white`.
+  /// - [borderColor]: Border color for the tag chips. Default is `Colors.grey`.
+  /// - [hintText]: Placeholder text shown inside the input field. Default is `"Enter tags"`.
+  /// - [height]: Height of the tag display area. Default is `60.0`.
+  /// - [textStyle]: Custom text style for the tag text. Default is `TextStyle(fontSize: 14)`.
+  ///
+  /// Example:
+  /// ```dart
+  /// TagInputField.tagInput(
+  ///   suggestions: ["Flutter", "Dart", "UI"],
+  ///   onTagsChanged: (tags) => print(tags),
+  ///   tagColor: Colors.green,
+  ///   textColor: Colors.black,
+  ///   borderColor: Colors.greenAccent,
+  ///   hintText: "Add a tag...",
+  ///   height: 80.0,
+  ///   textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  /// )
+  /// ```
+  static Widget tagInput({
+    required List<String> suggestions,
+    required Function(List<String>) onTagsChanged,
+    Color tagColor = Colors.blue,
+    Color textColor = Colors.white,
+    Color borderColor = Colors.grey,
+    String hintText = "Enter tags",
+    double height = 60.0,
+    TextStyle textStyle = const TextStyle(fontSize: 14),
+  }) => TagInputField(
+    suggestions: suggestions,
+    onTagsChanged: onTagsChanged,
+    tagColor: tagColor,
+    textColor: textColor,
+    borderColor: borderColor,
+    height: height,
+    hintText: hintText,
+    textStyle: textStyle,
+  );
+
+  /// A wrapper around `AnimatedSwitcherWrapper` for smooth transitions.
+  /// Returns an `AnimatedSwitcherWrapper` to smoothly transition between widgets.
+  ///
+  /// - [child]: The widget to animate when it changes.
+  /// - [duration]: Duration of the animation (default: `Durations.medium4`).
+  static Widget animatedSwitcher({
+    required Widget child,
+    Duration duration = Durations.medium4,
+  }) => AnimatedSwitcherWrapper(duration: duration, child: child);
 }
