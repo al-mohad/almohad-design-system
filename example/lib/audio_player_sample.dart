@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:almohad_design_system/almohad_design_system.dart';
+import 'package:flutter/material.dart';
 
 class DummyAudioPlayer extends StatelessWidget {
   const DummyAudioPlayer({super.key});

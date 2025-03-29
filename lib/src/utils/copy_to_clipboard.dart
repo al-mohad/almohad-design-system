@@ -21,11 +21,7 @@ class CopyToClipboardWidget extends StatelessWidget {
     await HapticFeedback.selectionClick();
 
     if (!context.mounted) return; // Check if context is still mounted
-    CustomToasts.show(
-      context: context,
-      message: successMessage!,
-      type: ToastType.info,
-    );
+    CustomToasts.show(message: successMessage!, type: ToastType.info);
   }
 
   @override
@@ -67,11 +63,7 @@ class CopyToClipboardComponent extends StatelessWidget {
     await HapticFeedback.selectionClick();
 
     if (!context.mounted) return; // Check if context is still mounted
-    CustomToasts.show(
-      context: context,
-      message: "Copied to clipboard!",
-      type: ToastType.info,
-    );
+    CustomToasts.show(message: "Copied to clipboard!", type: ToastType.info);
   }
 
   @override

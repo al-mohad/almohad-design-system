@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 customLoader(BuildContext context, {String? lottie}) async {
-  showDialog(
+  await showDialog(
     context: context,
-    barrierColor: Theme.of(context).primaryColor.withOpacity(0.1),
+    barrierColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
     barrierDismissible: false,
     builder:
         (_) => PopScope(

@@ -82,7 +82,7 @@ class DummyConversation extends StatelessWidget {
             bubblePadding: EdgeInsets.zero,
             // viewType: ImageViewType.list,
             onImagePreview: (images, index) {
-              print("Image tapped: ${images[index]}");
+              debugPrint("Image tapped: ${images[index]}");
             },
           ),
 

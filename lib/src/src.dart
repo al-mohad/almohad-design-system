@@ -14,4 +14,5 @@ export 'widgets/others/live_date_time.dart';
 export 'widgets/others/loader/custom_loader.dart';
 export 'widgets/others/nil.dart';
 export 'widgets/texts/rich_text_widget.dart';
+export 'widgets/texts/text_form_field.dart';
 export 'widgets/texts/texts.dart';

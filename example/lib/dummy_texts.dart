@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:almohad_design_system/almohad_design_system.dart';
+import 'package:flutter/material.dart';
 
 class DummyTexts extends StatelessWidget {
   const DummyTexts({super.key});
@@ -20,14 +20,14 @@ class DummyTexts extends StatelessWidget {
             DesignSystem.textField(
               label: 'Email Address',
               hintText: 'almohad@hey.com',
-              prefixIcon: Icons.email,
+              prefixIcon: Icon(Icons.email),
             ),
             DesignSystem.textField(
               label: 'Password',
               hintText: 'Enter your password',
               obscureText: true,
-              prefixIcon: Icons.lock,
-              suffixIcon: Icons.visibility,
+              prefixIcon: Icon(Icons.lock),
+              suffixIcon: Icon(Icons.visibility),
             ),
           ],
         ),

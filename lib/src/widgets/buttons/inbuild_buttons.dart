@@ -92,10 +92,10 @@ class CustomButtonX extends StatefulWidget {
        isOutline = false;
 
   @override
-  _CustomButtonXState createState() => _CustomButtonXState();
+  CustomButtonXState createState() => CustomButtonXState();
 }
 
-class _CustomButtonXState extends State<CustomButtonX> {
+class CustomButtonXState extends State<CustomButtonX> {
   bool _isLoading = false;
   double _buttonWidth = 200.0;
   double _buttonHeight = 50.0;

@@ -5,8 +5,8 @@ import 'package:example/dummy_texts.dart';
 import 'package:example/parallax_images.dart';
 import 'package:flutter/material.dart';
 
+import 'audio_player_sample.dart';
 import 'chat_messages_sample.dart';
-import 'dummY_audio_player.dart';
 import 'expanded_test.dart';
 
 void main() {
@@ -38,14 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {},
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

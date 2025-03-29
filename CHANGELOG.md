@@ -244,3 +244,7 @@ Upgrade now and enjoy the enhancements!
 - **Fixed occasional crashes** when using `LiveTime` with invalid date formats.
 
 🚀 _Upgrade now for a smoother, more interactive UI experience!_
+
+## 0.1.9 - ⚙️ Fixes
+
+## 0.2.0 - ⚙️ Fixed Analysis

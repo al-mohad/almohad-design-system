@@ -20,7 +20,6 @@ import 'src/utils/color_strength.dart';
 import 'src/utils/copy_to_clipboard.dart';
 import 'src/widgets/container/custom_container.dart';
 import 'src/widgets/others/parallax_image.dart';
-import 'src/widgets/texts/text_form_field.dart';
 
 export 'src/src.dart';
 
@@ -196,12 +195,12 @@ class DesignSystem {
     String obscuringCharacter = '●',
 
     /// The icon displayed at the start of the text field.
-    IconData? prefixIcon,
+    Widget? prefixIcon,
 
     /// The icon displayed at the end of the text field.
     ///
     /// Typically used for password visibility toggles or search actions.
-    IconData? suffixIcon,
+    Widget? suffixIcon,
 
     /// Callback function triggered when the suffix icon is tapped.
     ///
@@ -599,11 +598,12 @@ class DesignSystem {
     errorImage: errorImagePath,
   );
 
-  static Widget loader(BuildContext context, {required String? lottiePath}) =>
-      customLoader(context, lottie: lottiePath);
+  static Future<void> loader(
+    BuildContext context, {
+    String? lottiePath,
+  }) async => await customLoader(context, lottie: lottiePath);
 
   static void toast({
-    required BuildContext context,
     required ToastType type,
     String? title,
     Color? titleColor,
@@ -651,7 +651,6 @@ class DesignSystem {
     Offset? endOffset,
     Route? flushbarRoute,
   }) => CustomToasts.show(
-    context: context,
     type: type,
     title: title,
     titleColor: titleColor,
@@ -696,104 +695,6 @@ class DesignSystem {
     routeColor: routeColor,
     userInputForm: userInputForm,
     endOffset: endOffset,
-    flushbarRoute: flushbarRoute,
-  );
-
-  static void toastCustom({
-    required BuildContext context,
-    required String message,
-    required IconData iconData,
-    required Color iconColor,
-    required Color leftBarColor,
-    String? title,
-    Color? titleColor,
-    double? titleSize,
-    Color? messageColor,
-    double? messageSize,
-    Widget? titleText,
-    Widget? messageText,
-    bool shouldIconPulse = true,
-    double? maxWidth,
-    EdgeInsets margin = const EdgeInsets.all(0.0),
-    EdgeInsets padding = const EdgeInsets.all(16),
-    double? borderRadius,
-    TextDirection textDirection = TextDirection.ltr,
-    Color? borderColor,
-    double borderWidth = 1.0,
-    Color backgroundColor = const Color(0xFF303030),
-    List<BoxShadow>? boxShadows,
-    Gradient? backgroundGradient,
-    Widget? mainButton,
-    VoidCallback? onTap,
-    Duration? duration = const Duration(seconds: 5),
-    bool isDismissible = true,
-    FlushbarDismissDirection dismissDirection =
-        FlushbarDismissDirection.VERTICAL,
-    bool showProgressIndicator = false,
-    AnimationController? progressIndicatorController,
-    Color? progressIndicatorBackgroundColor,
-    Animation<Color>? progressIndicatorValueColor,
-    FlushbarPosition flushbarPosition = FlushbarPosition.BOTTOM,
-    double positionOffset = 0.0,
-    FlushbarStyle flushbarStyle = FlushbarStyle.FLOATING,
-    Curve forwardAnimationCurve = Curves.easeOutCirc,
-    Curve reverseAnimationCurve = Curves.easeOutCirc,
-    Duration animationDuration = const Duration(seconds: 1),
-    FlushbarStatusCallback? onStatusChanged,
-    double barBlur = 0.0,
-    bool blockBackgroundInteraction = false,
-    double? routeBlur,
-    Color? routeColor,
-    Form? userInputForm,
-    Offset? endOffset,
-    Route? flushbarRoute,
-  }) => CustomToasts.custom(
-    context: context,
-    message: message,
-    iconData: iconData,
-    iconColor: iconColor,
-    leftBarColor: leftBarColor,
-    title: title,
-    titleColor: titleColor,
-    titleSize: titleSize,
-    messageColor: messageColor,
-    messageSize: messageSize,
-    titleText: titleText,
-    messageText: messageText,
-    shouldIconPulse: shouldIconPulse,
-    maxWidth: maxWidth,
-    margin: margin,
-    padding: padding,
-    borderRadius: borderRadius,
-    textDirection: textDirection,
-    borderColor: borderColor,
-    borderWidth: borderWidth,
-    backgroundColor: backgroundColor,
-    boxShadows: boxShadows,
-    backgroundGradient: backgroundGradient,
-    mainButton: mainButton,
-    onTap: onTap,
-    duration: duration,
-    isDismissible: isDismissible,
-    dismissDirection: dismissDirection,
-    showProgressIndicator: showProgressIndicator,
-    progressIndicatorController: progressIndicatorController,
-    progressIndicatorBackgroundColor: progressIndicatorBackgroundColor,
-    progressIndicatorValueColor: progressIndicatorValueColor,
-    flushbarPosition: flushbarPosition,
-    positionOffset: positionOffset,
-    flushbarStyle: flushbarStyle,
-    forwardAnimationCurve: forwardAnimationCurve,
-    reverseAnimationCurve: reverseAnimationCurve,
-    animationDuration: animationDuration,
-    onStatusChanged: onStatusChanged,
-    barBlur: barBlur,
-    blockBackgroundInteraction: blockBackgroundInteraction,
-    routeBlur: routeBlur,
-    routeColor: routeColor,
-    userInputForm: userInputForm,
-    endOffset: endOffset,
-    flushbarRoute: flushbarRoute,
   );
 
   /// A simple copy-to-clipboard widget with text and an icon.
@@ -1000,4 +901,6 @@ class DesignSystem {
     required Widget child,
     Duration duration = Durations.medium4,
   }) => AnimatedSwitcherWrapper(duration: duration, child: child);
+
+  // static RegexPatterns regx => RegexPatterns.regx;
 }

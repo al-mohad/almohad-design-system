@@ -149,7 +149,7 @@ class DynamicImageGrid extends StatelessWidget {
               // 🔥 Overlay if more than 4 images
               if (index == 3 && imageUrls.length > 4)
                 Container(
-                  color: Colors.black.withOpacity(0.5), // Dark overlay
+                  color: Colors.black.withValues(alpha: 0.5), // Dark overlay
                   alignment: Alignment.center,
                   child: Text(
                     "+${imageUrls.length - 4} more",

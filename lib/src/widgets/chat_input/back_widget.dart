@@ -15,7 +15,6 @@ class BackWidget extends StatelessWidget {
             IconButton(
               onPressed: () {
                 CustomToasts.show(
-                  context: context,
                   type: ToastType.info,
                   message: 'Show emojies',
                 );
@@ -35,11 +34,7 @@ class BackWidget extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                CustomToasts.show(
-                  context: context,
-                  type: ToastType.info,
-                  message: 'Show picker',
-                );
+                CustomToasts.show(type: ToastType.info, message: 'Show picker');
               },
               icon: Icon(Icons.attach_file_outlined),
             ),
@@ -47,7 +42,6 @@ class BackWidget extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   CustomToasts.show(
-                    context: context,
                     type: ToastType.info,
                     message: 'open camera',
                   );

@@ -40,8 +40,8 @@ class CustomTextField extends StatefulWidget {
   final CustomTextFieldType fieldType;
   final bool obscureText;
   final String obscuringCharacter;
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final VoidCallback? onSuffixIconTap;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
@@ -115,6 +115,9 @@ class CustomTextFieldState extends State<CustomTextField> {
         firstDate: DateTime(2000),
         lastDate: DateTime(2101),
       );
+
+      if (!context.mounted) return; // Proper way to check context validity
+
       if (pickedDate != null && widget.controller != null) {
         widget.controller!.text = pickedDate.toLocal().toString().split(' ')[0];
       }
@@ -123,6 +126,9 @@ class CustomTextFieldState extends State<CustomTextField> {
         context: context,
         initialTime: TimeOfDay.now(),
       );
+
+      if (!context.mounted) return; // Proper check for context validity
+
       if (pickedTime != null && widget.controller != null) {
         widget.controller!.text = pickedTime.format(context);
       }
@@ -166,15 +172,12 @@ class CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           labelText: widget.label,
           hintText: widget.hintText,
-          prefixIcon:
-              widget.prefixIcon != null
-                  ? Icon(widget.prefixIcon, color: defaultBorderColor)
-                  : null,
+          prefixIcon: widget.prefixIcon,
           suffixIcon:
               widget.suffixIcon != null
                   ? GestureDetector(
                     onTap: widget.onSuffixIconTap,
-                    child: Icon(widget.suffixIcon, color: defaultBorderColor),
+                    child: widget.suffixIcon,
                   )
                   : null,
           border: OutlineInputBorder(

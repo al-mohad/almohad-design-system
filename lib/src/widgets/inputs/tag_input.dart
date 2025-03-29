@@ -98,7 +98,8 @@ class TagRenderBox extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint tagBackground = Paint()..color = tagColor.withOpacity(0.7);
+    final Paint tagBackground =
+        Paint()..color = tagColor.withValues(alpha: 0.7);
     final Paint borderPaint =
         Paint()
           ..color = borderColor
@@ -148,7 +149,10 @@ class TagRenderBox extends CustomPainter {
       final TextPainter removePainter = TextPainter(
         text: TextSpan(
           text: " ×",
-          style: TextStyle(fontSize: 14, color: textColor.withOpacity(0.8)),
+          style: TextStyle(
+            fontSize: 14,
+            color: textColor.withValues(alpha: 0.8),
+          ),
         ),
         textDirection: TextDirection.ltr,
       );

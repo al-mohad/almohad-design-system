@@ -18,11 +18,7 @@ class FrontWidget extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            CustomToasts.show(
-              context: context,
-              type: ToastType.info,
-              message: 'show emojies',
-            );
+            CustomToasts.show(type: ToastType.info, message: 'show emojies');
           },
           icon: Icon(Icons.emoji_emotions_outlined, color: Colors.transparent),
         ),
@@ -49,11 +45,7 @@ class FrontWidget extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            CustomToasts.show(
-              context: context,
-              type: ToastType.info,
-              message: 'show picker',
-            );
+            CustomToasts.show(type: ToastType.info, message: 'show picker');
           },
           icon: Icon(Icons.attach_file_outlined, color: Colors.transparent),
         ),

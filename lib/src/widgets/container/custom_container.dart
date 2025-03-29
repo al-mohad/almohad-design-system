@@ -68,12 +68,12 @@ class CustomContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withValues(alpha: 0.15),
               offset: Offset(6, 6),
               blurRadius: elevation,
             ),
             BoxShadow(
-              color: Colors.white.withOpacity(0.5),
+              color: Colors.white.withValues(alpha: 0.5),
               offset: Offset(-6, -6),
               blurRadius: elevation,
             ),
@@ -83,11 +83,14 @@ class CustomContainer extends StatelessWidget {
       case ContainerStyle.glassmorphism:
         return BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          color: defaultColor.withOpacity(0.15),
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+          color: defaultColor.withValues(alpha: 0.15),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.3),
+            width: 1,
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: elevation,
               spreadRadius: 1,
             ),
@@ -119,7 +122,7 @@ class CustomContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               offset: Offset(0, elevation / 2),
               blurRadius: elevation,
             ),
@@ -131,7 +134,7 @@ class CustomContainer extends StatelessWidget {
           color: defaultColor,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             width: strokeWidth!,
           ),
         );
@@ -161,7 +164,7 @@ class DottedBorderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint =
         Paint()
-          ..color = Colors.black.withOpacity(0.6)
+          ..color = Colors.black.withValues(alpha: 0.6)
           ..strokeWidth = strokeWidth
           ..style = PaintingStyle.stroke;
 
