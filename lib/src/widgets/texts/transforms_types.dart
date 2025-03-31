@@ -1,0 +1,17 @@
+enum TransformType {
+  glitch,
+  wave,
+  shake,
+  fade,
+  scale,
+  rotate,
+  blur,
+  flip,
+  colorShift,
+  typewriter,
+  shimmer,
+  outline,
+  rainbow,
+  shadowPulse,
+  bounce,
+}

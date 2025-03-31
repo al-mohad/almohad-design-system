@@ -1,8 +1,10 @@
 import 'package:almohad_design_system/almohad_design_system.dart';
 import 'package:example/buttons_example.dart';
+import 'package:example/containers_sample.dart';
 import 'package:example/dummy_containers.dart';
 import 'package:example/dummy_texts.dart';
 import 'package:example/parallax_images.dart';
+import 'package:example/texts_sample.dart';
 import 'package:flutter/material.dart';
 
 import 'audio_player_sample.dart';
@@ -10,7 +12,7 @@ import 'chat_messages_sample.dart';
 import 'expanded_test.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DesignSystem.toastProvider(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Glitch Text'),
     );
   }
 }
@@ -44,12 +46,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        title: Text(widget.title),
+        title: DesignSystem.transformativeText(text: widget.title),
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TextsSample()),
+                );
+              },
+              title: Text('Texts'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            ),
             ListTile(
               onTap: () {
                 Navigator.push(
@@ -138,6 +150,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               title: Text('Dummy Texts Example'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              subtitle: Text('This is a simple example of a text widget.'),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ContainersSample(),
+                  ),
+                );
+              },
+              title: Text('Containers Samples'),
               trailing: const Icon(Icons.arrow_forward_ios),
               subtitle: Text('This is a simple example of a text widget.'),
             ),

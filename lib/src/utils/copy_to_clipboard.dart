@@ -1,4 +1,4 @@
-import 'package:almohad_design_system/src/utils/toasts.dart';
+import 'package:almohad_design_system/src/utils/toast/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gutter/flutter_gutter.dart';

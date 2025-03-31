@@ -19,7 +19,9 @@ customLoader(BuildContext context, {String? lottie}) async {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: LottieBuilder.asset(
-                  lottie ?? 'assets/lotties/loading.json',
+                  (lottie == null || lottie.isEmpty)
+                      ? 'assets/lotties/loading.json'
+                      : lottie,
                   height: 120,
                   width: 120,
                   fit: BoxFit.contain,

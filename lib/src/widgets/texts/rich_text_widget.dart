@@ -1,4 +1,4 @@
-import 'package:almohad_design_system/src/widgets/texts/texts.dart';
+import 'package:almohad_design_system/almohad_design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -6,28 +6,52 @@ import 'package:flutter/material.dart';
 class RichTextWidget extends StatelessWidget {
   final TextStyle? styleForAll;
   final Iterable<BaseText> texts;
-  const RichTextWidget({super.key, required this.texts, this.styleForAll});
+  final TextAlign textAlign;
+  final TextOverflow overflow;
+  final int? maxLines;
+  final bool selectable;
+
+  const RichTextWidget({
+    super.key,
+    required this.texts,
+    this.styleForAll,
+    this.textAlign = TextAlign.start,
+    this.overflow = TextOverflow.clip,
+    this.maxLines,
+    this.selectable = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children:
-            texts.map((baseText) {
-              if (baseText is LinkText) {
-                return TextSpan(
-                  text: baseText.text,
-                  style: styleForAll?.merge(baseText.style),
-                  recognizer: TapGestureRecognizer()..onTap = baseText.onTapped,
-                );
-              } else {
-                return TextSpan(
-                  text: baseText.text,
-                  style: styleForAll?.merge(baseText.style),
-                );
-              }
-            }).toList(),
-      ),
+    final textSpan = TextSpan(children: texts.map(_buildTextSpan).toList());
+
+    return selectable
+        ? SelectableText.rich(
+          textSpan,
+          textAlign: textAlign,
+          maxLines: maxLines,
+        )
+        : RichText(
+          text: textSpan,
+          textAlign: textAlign,
+          overflow: overflow,
+          maxLines: maxLines,
+        );
+  }
+
+  TextSpan _buildTextSpan(BaseText baseText) {
+    final mergedStyle = (styleForAll ?? const TextStyle()).merge(
+      baseText.style,
     );
+
+    if (baseText is LinkText) {
+      return TextSpan(
+        text: baseText.text,
+        style: mergedStyle,
+        recognizer: (TapGestureRecognizer()..onTap = baseText.onTapped),
+      );
+    }
+
+    return TextSpan(text: baseText.text, style: mergedStyle);
   }
 }

@@ -1,5 +1,9 @@
 import 'package:almohad_design_system/src/utils/dialogs.dart';
+import 'package:almohad_design_system/src/utils/logger.dart';
 import 'package:almohad_design_system/src/utils/map_luancher.dart';
+import 'package:almohad_design_system/src/utils/regex.dart';
+import 'package:almohad_design_system/src/utils/toast/toast_provider.dart'
+    as tp;
 import 'package:almohad_design_system/src/widgets/animations/animated_switcher.dart';
 import 'package:almohad_design_system/src/widgets/audio_message/audio_message.dart';
 import 'package:almohad_design_system/src/widgets/inputs/tag_input.dart';
@@ -10,6 +14,7 @@ import 'package:almohad_design_system/src/widgets/morphisms/isometric.dart';
 import 'package:almohad_design_system/src/widgets/morphisms/retro_futurism.dart';
 import 'package:almohad_design_system/src/widgets/morphisms/skeuomorphism.dart';
 import 'package:almohad_design_system/src/widgets/others/label_divider.dart';
+import 'package:almohad_design_system/src/widgets/texts/transformative_text.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -20,6 +25,7 @@ import 'src/utils/color_strength.dart';
 import 'src/utils/copy_to_clipboard.dart';
 import 'src/widgets/container/custom_container.dart';
 import 'src/widgets/others/parallax_image.dart';
+import 'src/widgets/texts/rich_text_widget.dart';
 
 export 'src/src.dart';
 
@@ -254,6 +260,8 @@ class DesignSystem {
     ///
     /// If `fieldType` is `CustomTextFieldType.multiText`, this will default to unlimited lines.
     int? maxLines,
+    bool? enableVibration,
+    bool? enableShake,
   }) {
     return CustomTextField(
       label: label,
@@ -274,6 +282,8 @@ class DesignSystem {
       focusedBorderColor: focusedBorderColor,
       borderRadius: borderRadius,
       padding: padding,
+      enableShake: enableShake ?? false,
+      enableVibration: enableVibration ?? false,
     );
   }
 
@@ -289,6 +299,10 @@ class DesignSystem {
     bool isDarkMode = false,
     double? height,
     double? width,
+    double? strokeWidth,
+    double? blurRadius,
+    double? spreadRadius,
+    List<double>? dashPattern,
   }) {
     return CustomContainer(
       style: style,
@@ -300,6 +314,10 @@ class DesignSystem {
       margin: margin,
       elevation: elevation,
       isDarkMode: isDarkMode,
+      strokeWidth: strokeWidth,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+      dashPattern: dashPattern,
       child: child,
     );
   }
@@ -603,6 +621,22 @@ class DesignSystem {
     String? lottiePath,
   }) async => await customLoader(context, lottie: lottiePath);
 
+  /// Wraps the given [child] widget inside a [toastProvider].
+  ///
+  /// This ensures that the global context for displaying toasts is always available,
+  /// eliminating the need for `navigatorKey`.
+  ///
+  /// ### Usage Example:
+  /// ```dart
+  /// void main() {
+  ///   runApp(DesignSystem.toastProvider(child: MyApp()));
+  /// }
+  /// ```
+  ///
+  /// Now, `DesignSystem.toast(...)` can be used anywhere in the app.
+  static Widget toastProvider({required Widget child}) =>
+      tp.ToastProvider(child: child);
+
   static void toast({
     required ToastType type,
     String? title,
@@ -902,5 +936,161 @@ class DesignSystem {
     Duration duration = Durations.medium4,
   }) => AnimatedSwitcherWrapper(duration: duration, child: child);
 
-  // static RegexPatterns regx => RegexPatterns.regx;
+  static get regx => RegexPatterns.regx;
+
+  static void log({
+    required String text,
+    LogType type = LogType.debug,
+    Object? metadata,
+  }) => AppLogger(text, type: type, metadata: metadata);
+
+  static Widget actionButton({
+    ButtonVariant variant = ButtonVariant.defaultStyle,
+    Color primaryColor = Colors.blue,
+    Color darkPrimaryColor = Colors.blueAccent,
+    String idleText = "Start",
+    String busyText = "Processing...",
+    String doneText = "Completed!",
+    IconData idleIcon = Icons.play_arrow,
+    IconData busyIcon = Icons.sync,
+    IconData doneIcon = Icons.check_circle,
+    double width = 200.0,
+    double height = 50.0,
+    Duration animationDuration = const Duration(seconds: 2),
+  }) => ActionButton(
+    variant: variant,
+    primaryColor: primaryColor,
+    darkPrimaryColor: darkPrimaryColor,
+    idleText: idleText,
+    busyText: busyText,
+    doneText: doneText,
+    idleIcon: idleIcon,
+    busyIcon: busyIcon,
+    doneIcon: doneIcon,
+    width: width,
+    height: height,
+    animationDuration: animationDuration,
+  );
+
+  static Widget richTexts({
+    required Iterable<BaseText> texts,
+    TextStyle? styleForAll,
+    bool selectable = false,
+    int? maxLines,
+    TextOverflow overflow = TextOverflow.clip,
+    TextAlign textAlign = TextAlign.left,
+  }) => RichTextWidget(
+    texts: texts,
+    styleForAll: styleForAll,
+    selectable: selectable,
+    maxLines: maxLines,
+    overflow: overflow,
+    textAlign: textAlign,
+  );
+
+  static Widget animatedToggle({
+    required List<String> values,
+    required void Function(int, String) onToggle,
+    List<IconData>? icons,
+    Duration animationDuration = const Duration(milliseconds: 300),
+    Curve animationCurve = Curves.easeInOut,
+    Color activeColor = Colors.black,
+    Color inactiveColor = Colors.white,
+    Color activeTextColor = Colors.white,
+    Color inactiveTextColor = Colors.black,
+    Color backgroundColor = Colors.grey,
+    TextStyle textStyle = const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    double width = 200,
+    double height = 60,
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 10,
+      vertical: 5,
+    ),
+    EdgeInsets margin = const EdgeInsets.all(0),
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(30)),
+    bool showShadow = true,
+  }) {
+    return AnimatedToggleSwitch(
+      values: values,
+      icons: icons,
+      onToggle: onToggle,
+      animationDuration: animationDuration,
+      animationCurve: animationCurve,
+      activeColor: activeColor,
+      inactiveColor: inactiveColor,
+      activeTextColor: activeTextColor,
+      inactiveTextColor: inactiveTextColor,
+      backgroundColor: backgroundColor,
+      textStyle: textStyle,
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      borderRadius: borderRadius,
+      showShadow: showShadow,
+    );
+  }
+
+  static Widget transformingToggle({
+    required List<String> primaryValues,
+    required List<String> secondaryValues,
+    required void Function(int, String) onPrimaryToggle,
+    required void Function(int, String) onSecondaryToggle,
+    Duration animationDuration = const Duration(milliseconds: 300),
+    Curve animationCurve = Curves.easeInOut,
+    Color activeColor = Colors.black,
+    Color inactiveColor = Colors.white,
+    Color activeTextColor = Colors.white,
+    Color inactiveTextColor = Colors.black,
+    Color backgroundColor = Colors.grey,
+    TextStyle textStyle = const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    double width = 250,
+    double height = 60,
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 10,
+      vertical: 5,
+    ),
+    EdgeInsets margin = const EdgeInsets.all(0),
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(30)),
+    bool showShadow = true,
+  }) {
+    return TransformingAnimatedToggleSwitch(
+      primaryValues: primaryValues,
+      secondaryValues: secondaryValues,
+      onPrimaryToggle: onPrimaryToggle,
+      onSecondaryToggle: onSecondaryToggle,
+      animationDuration: animationDuration,
+      animationCurve: animationCurve,
+      activeColor: activeColor,
+      inactiveColor: inactiveColor,
+      activeTextColor: activeTextColor,
+      inactiveTextColor: inactiveTextColor,
+      backgroundColor: backgroundColor,
+      textStyle: textStyle,
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      borderRadius: borderRadius,
+      showShadow: showShadow,
+    );
+  }
+
+  static Widget transformativeText({
+    required String text,
+    TextStyle? style,
+    TransformType? type,
+    bool? repeat,
+  }) => TransformText(
+    text: text,
+    transformType: type ?? TransformType.glitch,
+    style: style,
+    repeat: repeat ?? true,
+  );
 }

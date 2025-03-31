@@ -105,7 +105,7 @@ class CustomButtonState extends State<CustomButton> {
     Widget animatedButton = AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       height: widget.height ?? 50,
-      width: widget.width ?? 200,
+      width: widget.width,
       padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: effectiveButtonColor,

@@ -1,8 +1,7 @@
-import 'dart:ui' show PathMetric;
-
+import 'package:almohad_design_system/src/widgets/container/style.dart';
 import 'package:flutter/material.dart';
 
-import 'style.dart';
+import 'dashed_border.dart' show DashedBorderPainter;
 
 class CustomContainer extends StatelessWidget {
   final Widget child;
@@ -11,12 +10,14 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final double elevation;
+  final double? blurRadius;
+  final double? spreadRadius;
   final ContainerStyle style;
   final bool isDarkMode;
   final double? height;
   final double? width;
   final double? strokeWidth;
-  final bool isDashed;
+  final List<double>? dashPattern;
 
   const CustomContainer({
     super.key,
@@ -28,10 +29,12 @@ class CustomContainer extends StatelessWidget {
     this.padding = const EdgeInsets.all(16),
     this.margin = const EdgeInsets.all(8),
     this.elevation = 10,
+    this.blurRadius = 10, // Default blur radius
+    this.spreadRadius = 0, // Default spread radius
     this.style = ContainerStyle.flat,
     this.isDarkMode = false,
     this.strokeWidth = 2,
-    this.isDashed = false,
+    this.dashPattern = const [6, 4],
   });
 
   @override
@@ -40,168 +43,209 @@ class CustomContainer extends StatelessWidget {
     final defaultColor = color ?? theme.colorScheme.surface;
     final isDark = theme.brightness == Brightness.dark || isDarkMode;
 
-    return CustomPaint(
-      painter:
-          (style == ContainerStyle.dottedBorder)
-              ? DottedBorderPainter(
+    return Stack(
+      children: [
+        if (style == ContainerStyle.dashedBorder)
+          Positioned.fill(
+            child: CustomPaint(
+              painter: DashedBorderPainter(
+                color: Colors.black45,
+                strokeWidth: strokeWidth ?? 1.0,
+                dashPattern: dashPattern ?? [6, 4],
                 borderRadius: borderRadius,
-                strokeWidth: strokeWidth!,
-                isDashed: isDashed,
-              )
-              : null,
-      child: Container(
-        padding: padding,
-        margin: margin,
-        height: height,
-        width: width,
-        decoration: _getDecoration(defaultColor, isDark),
-        child: child,
-      ),
+              ),
+            ),
+          ),
+        Container(
+          padding: padding,
+          margin: margin,
+          height: height,
+          width: width,
+          decoration: _getDecoration(defaultColor, isDark),
+          child: child,
+        ),
+      ],
     );
   }
 
   BoxDecoration _getDecoration(Color defaultColor, bool isDark) {
     switch (style) {
       case ContainerStyle.claymorphism:
-        return BoxDecoration(
-          color: defaultColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              offset: Offset(6, 6),
-              blurRadius: elevation,
-            ),
-            BoxShadow(
-              color: Colors.white.withValues(alpha: 0.5),
-              offset: Offset(-6, -6),
-              blurRadius: elevation,
-            ),
-          ],
-        );
-
+        return _claymorphism(defaultColor);
       case ContainerStyle.glassmorphism:
-        return BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          color: defaultColor.withValues(alpha: 0.15),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: elevation,
-              spreadRadius: 1,
-            ),
-          ],
-          backgroundBlendMode: BlendMode.overlay,
-        );
-
+        return _glassmorphism(defaultColor);
       case ContainerStyle.neumorphism:
-        return BoxDecoration(
-          color: defaultColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: isDark ? Colors.black54 : Colors.grey.shade300,
-              offset: Offset(4, 4),
-              blurRadius: elevation,
-            ),
-            BoxShadow(
-              color: isDark ? Colors.grey.shade800 : Colors.white,
-              offset: Offset(-4, -4),
-              blurRadius: elevation,
-            ),
-          ],
-        );
-
+        return _neumorphism(defaultColor, isDark);
+      case ContainerStyle.isometric:
+        return _isometric(defaultColor);
+      case ContainerStyle.cyberpunk:
+        return _cyberpunk(defaultColor);
+      case ContainerStyle.depth:
+        return _depth(defaultColor);
+      case ContainerStyle.retroFuturism:
+        return _retroFuturism(defaultColor);
+      case ContainerStyle.skeuomorphism:
+        return _skeuomorphism(defaultColor);
       case ContainerStyle.elevated:
-        return BoxDecoration(
-          color: defaultColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              offset: Offset(0, elevation / 2),
-              blurRadius: elevation,
-            ),
-          ],
-        );
-
+        return _elevated(defaultColor);
       case ContainerStyle.bordered:
-        return BoxDecoration(
-          color: defaultColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-          border: Border.all(
-            color: Colors.black.withValues(alpha: 0.5),
-            width: strokeWidth!,
-          ),
-        );
-
+        return _bordered(defaultColor);
       case ContainerStyle.flat:
       case ContainerStyle.dottedBorder:
+      case ContainerStyle.dashedBorder:
         return BoxDecoration(
           color: defaultColor,
           borderRadius: BorderRadius.circular(borderRadius),
         );
     }
   }
-}
 
-class DottedBorderPainter extends CustomPainter {
-  final double borderRadius;
-  final double strokeWidth;
-  final bool isDashed;
+  BoxDecoration _claymorphism(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        offset: Offset(6, 6),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+      BoxShadow(
+        color: Colors.white70,
+        offset: Offset(-6, -6),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-  DottedBorderPainter({
-    required this.borderRadius,
-    required this.strokeWidth,
-    required this.isDashed,
-  });
+  BoxDecoration _glassmorphism(Color color) => BoxDecoration(
+    borderRadius: BorderRadius.circular(borderRadius),
+    color: color.withValues(alpha: 0.15),
+    border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.1),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+    backgroundBlendMode: BlendMode.overlay,
+  );
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint =
-        Paint()
-          ..color = Colors.black.withValues(alpha: 0.6)
-          ..strokeWidth = strokeWidth
-          ..style = PaintingStyle.stroke;
+  BoxDecoration _neumorphism(Color color, bool isDark) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: isDark ? Colors.black54 : Colors.grey.shade300,
+        offset: Offset(4, 4),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+      BoxShadow(
+        color: isDark ? Colors.grey.shade800 : Colors.white,
+        offset: Offset(-4, -4),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-    final Path path =
-        Path()..addRRect(
-          RRect.fromRectAndRadius(
-            Rect.fromLTWH(0, 0, size.width, size.height),
-            Radius.circular(borderRadius),
-          ),
-        );
+  BoxDecoration _isometric(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black38,
+        offset: Offset(8, 12),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-    if (isDashed) {
-      _drawDashedLine(canvas, path, paint);
-    } else {
-      canvas.drawPath(path, paint);
-    }
-  }
+  BoxDecoration _cyberpunk(Color color) => BoxDecoration(
+    color: Colors.black,
+    borderRadius: BorderRadius.circular(borderRadius),
+    border: Border.all(color: Colors.cyanAccent, width: 2),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.purpleAccent,
+        offset: Offset(2, 2),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-  void _drawDashedLine(Canvas canvas, Path path, Paint paint) {
-    Path dashPath = Path();
-    double dashLength = 6;
-    double spaceLength = 3;
-    double distance = 0.0;
+  BoxDecoration _depth(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black54,
+        offset: Offset(6, 6),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+      BoxShadow(
+        color: Colors.white24,
+        offset: Offset(-6, -6),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-    for (PathMetric pathMetric in path.computeMetrics()) {
-      while (distance < pathMetric.length) {
-        dashPath.addPath(
-          pathMetric.extractPath(distance, distance + dashLength),
-          Offset.zero,
-        );
-        distance += dashLength + spaceLength;
-      }
-    }
+  BoxDecoration _retroFuturism(Color color) => BoxDecoration(
+    gradient: LinearGradient(colors: [Colors.purple, Colors.blueAccent]),
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black54,
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-    canvas.drawPath(dashPath, paint);
-  }
+  BoxDecoration _skeuomorphism(Color color) => BoxDecoration(
+    color: Colors.brown.shade200,
+    borderRadius: BorderRadius.circular(borderRadius),
+    border: Border.all(color: Colors.brown.shade700, width: 2),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.brown.shade800,
+        offset: Offset(4, 4),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+      BoxShadow(
+        color: Colors.brown.shade100,
+        offset: Offset(-4, -4),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  BoxDecoration _elevated(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        offset: Offset(0, elevation / 2),
+        blurRadius: blurRadius ?? 0.0,
+        spreadRadius: spreadRadius ?? 0.0,
+      ),
+    ],
+  );
+
+  BoxDecoration _bordered(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(borderRadius),
+    border: Border.all(color: Colors.black45, width: strokeWidth!),
+  );
 }

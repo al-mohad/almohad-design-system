@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-/// Enum representing different types of text fields.
 enum CustomTextFieldType {
   text,
   multiText,
@@ -15,24 +15,6 @@ enum CustomTextFieldType {
   time,
 }
 
-/// A customizable text field widget supporting multiple input types.
-///
-/// This widget adapts based on the `fieldType` to provide tailored input behavior.
-/// It supports standard text input, passwords with toggle visibility, multi-line
-/// text, numbers, email, URLs, search, and even date/time pickers.
-///
-/// The `CustomTextFieldType` enum determines the input type:
-/// - `text`: Standard single-line text input.
-/// - `multiText`: Multi-line text field.
-/// - `password`: Secure password input with toggle visibility.
-/// - `email`: Email input with appropriate keyboard type.
-/// - `phone`: Numeric phone input.
-/// - `number`: Integer-only input.
-/// - `decimal`: Decimal number input.
-/// - `url`: URL input with the correct keyboard type.
-/// - `search`: Text input with a search icon and submission action.
-/// - `date`: Opens a date picker on tap.
-/// - `time`: Opens a time picker on tap.
 class CustomTextField extends StatefulWidget {
   final String? label;
   final String? hintText;
@@ -53,6 +35,8 @@ class CustomTextField extends StatefulWidget {
   final EdgeInsets padding;
   final int? maxLength;
   final int? maxLines;
+  final bool enableShake;
+  final bool enableVibration;
 
   const CustomTextField({
     super.key,
@@ -75,14 +59,124 @@ class CustomTextField extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.maxLength,
     this.maxLines,
+    this.enableShake = true,
+    this.enableVibration = true,
   });
 
   @override
   CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class CustomTextFieldState extends State<CustomTextField> {
-  final bool _isPasswordVisible = false;
+class CustomTextFieldState extends State<CustomTextField>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _shakeController;
+  late Animation<double> _shakeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _shakeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _shakeAnimation = Tween<double>(
+      begin: 0,
+      end: 10,
+    ).chain(CurveTween(curve: Curves.elasticIn)).animate(_shakeController);
+  }
+
+  @override
+  void dispose() {
+    _shakeController.dispose();
+    super.dispose();
+  }
+
+  void _triggerValidationEffect() {
+    if (widget.enableShake) {
+      _shakeController.forward(from: 0);
+    }
+    if (widget.enableVibration) {
+      _vibrate();
+    }
+  }
+
+  Future<void> _vibrate() async => await HapticFeedback.vibrate();
+
+  String? _validate(String? value) {
+    final error = widget.validator?.call(value);
+    if (error != null) {
+      _triggerValidationEffect();
+    }
+    return error;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final defaultBorderColor = widget.borderColor ?? theme.colorScheme.primary;
+    final defaultFocusedBorderColor =
+        widget.focusedBorderColor ?? theme.colorScheme.secondary;
+    final defaultTextStyle = widget.textStyle ?? theme.textTheme.bodyMedium;
+
+    return Padding(
+      padding: widget.padding,
+      child: Transform.translate(
+        offset: Offset(widget.enableShake ? _shakeAnimation.value : 0, 0),
+        child: TextFormField(
+          controller: widget.controller,
+          keyboardType: _getKeyboardType(),
+          obscureText: widget.fieldType == CustomTextFieldType.password,
+          obscuringCharacter: widget.obscuringCharacter,
+          onChanged: widget.onChanged,
+          validator: _validate,
+          maxLength: widget.maxLength,
+          maxLines:
+              widget.fieldType == CustomTextFieldType.multiText ? null : 1,
+          readOnly:
+              widget.fieldType == CustomTextFieldType.date ||
+              widget.fieldType == CustomTextFieldType.time,
+          onTap:
+              widget.fieldType == CustomTextFieldType.date ||
+                      widget.fieldType == CustomTextFieldType.time
+                  ? () => _handleTap(context)
+                  : null,
+          onFieldSubmitted:
+              widget.fieldType == CustomTextFieldType.search
+                  ? widget.onSearchSubmitted
+                  : null,
+          style: defaultTextStyle,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            hintText: widget.hintText,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon:
+                widget.suffixIcon != null
+                    ? GestureDetector(
+                      onTap: widget.onSuffixIconTap,
+                      child: widget.suffixIcon,
+                    )
+                    : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              borderSide: BorderSide(color: defaultBorderColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              borderSide: BorderSide(
+                color: defaultFocusedBorderColor,
+                width: 2,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   TextInputType _getKeyboardType() {
     switch (widget.fieldType) {
@@ -116,7 +210,7 @@ class CustomTextFieldState extends State<CustomTextField> {
         lastDate: DateTime(2101),
       );
 
-      if (!context.mounted) return; // Proper way to check context validity
+      if (!context.mounted) return;
 
       if (pickedDate != null && widget.controller != null) {
         widget.controller!.text = pickedDate.toLocal().toString().split(' ')[0];
@@ -127,73 +221,11 @@ class CustomTextFieldState extends State<CustomTextField> {
         initialTime: TimeOfDay.now(),
       );
 
-      if (!context.mounted) return; // Proper check for context validity
+      if (!context.mounted) return;
 
       if (pickedTime != null && widget.controller != null) {
         widget.controller!.text = pickedTime.format(context);
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final defaultBorderColor = widget.borderColor ?? theme.colorScheme.primary;
-    final defaultFocusedBorderColor =
-        widget.focusedBorderColor ?? theme.colorScheme.secondary;
-    final defaultTextStyle = widget.textStyle ?? theme.textTheme.bodyMedium;
-
-    return Padding(
-      padding: widget.padding,
-      child: TextFormField(
-        controller: widget.controller,
-        keyboardType: _getKeyboardType(),
-        obscureText:
-            widget.fieldType == CustomTextFieldType.password &&
-            !_isPasswordVisible,
-        obscuringCharacter: widget.obscuringCharacter,
-        onChanged: widget.onChanged,
-        validator: widget.validator,
-        maxLength: widget.maxLength,
-        maxLines: widget.fieldType == CustomTextFieldType.multiText ? null : 1,
-        readOnly:
-            widget.fieldType == CustomTextFieldType.date ||
-            widget.fieldType == CustomTextFieldType.time,
-        onTap:
-            (widget.fieldType == CustomTextFieldType.date ||
-                    widget.fieldType == CustomTextFieldType.time)
-                ? () => _handleTap(context)
-                : null,
-        onFieldSubmitted:
-            widget.fieldType == CustomTextFieldType.search
-                ? widget.onSearchSubmitted
-                : null,
-        style: defaultTextStyle,
-        decoration: InputDecoration(
-          labelText: widget.label,
-          hintText: widget.hintText,
-          prefixIcon: widget.prefixIcon,
-          suffixIcon:
-              widget.suffixIcon != null
-                  ? GestureDetector(
-                    onTap: widget.onSuffixIconTap,
-                    child: widget.suffixIcon,
-                  )
-                  : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide: BorderSide(color: defaultBorderColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide: BorderSide(color: defaultFocusedBorderColor, width: 2),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
-          ),
-        ),
-      ),
-    );
   }
 }

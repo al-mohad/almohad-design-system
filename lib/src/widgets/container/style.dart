@@ -6,4 +6,10 @@ enum ContainerStyle {
   elevated,
   bordered,
   dottedBorder,
+  isometric,
+  cyberpunk,
+  depth,
+  retroFuturism,
+  skeuomorphism,
+  dashedBorder,
 }

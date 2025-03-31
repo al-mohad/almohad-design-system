@@ -248,3 +248,33 @@ Upgrade now and enjoy the enhancements!
 ## 0.1.9 - ⚙️ Fixes
 
 ## 0.2.0 - ⚙️ Fixed Analysis
+
+## 0.2.1 - 🚀 Enhancements & Fixes
+
+### ✨ What's New?
+
+- **New Widgets:**
+  - **TransformText:** A floating action button with a customizable label for better UX. 🔘
+  - **transformingToggle:** A wrapper for progress indicators with built-in animations. ⏳
+  - **animatedToggle:** A card with hover effects for interactive UI. 🖱️
+  - **richTexts:** A text widget with a glitch animation effect. 🕶️
+  - **actionButton:** A text widget with a wavy animation effect. 🌊
+
+### 🛠️ Improvements
+
+- **Chat Enhancements:**
+  - `chatBubble` now supports **gradient backgrounds** and **message threading**. 💬
+  - Improved **auto-detection of URLs** with inline preview support.
+- **UI/UX Enhancements:**
+  - `animatedToggle` now supports **icon animations** on state change.
+  - `overlayLoading` now allows **custom overlay blur strength**.
+  - `imagePreview` optimized for **faster rendering** and **lazy loading**.
+
+### 🐛 Bug Fixes
+
+- **Fixed `toastCustom` animation stuttering** on low-end devices.
+- **Resolved `overlayLoading` overlapping issues** in nested widgets.
+- **Fixed `LiveTime` timezone discrepancies** in certain locales.
+- **General performance optimizations** for smoother UI updates.
+
+🚀 _Upgrade now for an even more powerful UI experience!_

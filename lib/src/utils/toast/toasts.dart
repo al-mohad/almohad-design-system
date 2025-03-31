@@ -2,15 +2,30 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-/// Global navigator key to access context globally
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 /// Enum representing different types of toasts
 enum ToastType { info, success, warning, danger }
 
-class CustomToasts {
-  static BuildContext? get _context => navigatorKey.currentContext;
+class ToastProvider extends StatefulWidget {
+  final Widget child;
 
+  const ToastProvider({super.key, required this.child});
+
+  static final GlobalKey<ToastProviderState> _key = GlobalKey();
+
+  static BuildContext? get context => _key.currentState?.context;
+
+  @override
+  ToastProviderState createState() => ToastProviderState();
+}
+
+class ToastProviderState extends State<ToastProvider> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
+
+class CustomToasts {
   /// Displays a toast based on the provided [type] with optional customization
   static void show({
     required ToastType type,
@@ -59,7 +74,13 @@ class CustomToasts {
     Form? userInputForm,
     Offset? endOffset,
   }) {
-    if (_context == null) return;
+    final context = ToastProvider.context;
+    if (context == null) {
+      debugPrint(
+        "❌ Error: Toast context is null! Ensure ToastProvider is wrapped around the app.",
+      );
+      return;
+    }
 
     final Map<ToastType, Map<String, dynamic>> toastProperties = {
       ToastType.info: {
@@ -135,6 +156,6 @@ class CustomToasts {
       routeColor: routeColor,
       userInputForm: userInputForm,
       endOffset: endOffset,
-    ).show(_context!);
+    ).show(context);
   }
 }
