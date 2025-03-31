@@ -278,3 +278,5 @@ Upgrade now and enjoy the enhancements!
 - **General performance optimizations** for smoother UI updates.
 
 🚀 _Upgrade now for an even more powerful UI experience!_
+
+## 0.2.2 - 🚀 AnalysisFixes

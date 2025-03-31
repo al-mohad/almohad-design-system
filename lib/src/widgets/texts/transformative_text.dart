@@ -21,10 +21,10 @@ class TransformText extends StatefulWidget {
   });
 
   @override
-  _TransformTextState createState() => _TransformTextState();
+  TransformTextState createState() => TransformTextState();
 }
 
-class _TransformTextState extends State<TransformText>
+class TransformTextState extends State<TransformText>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

@@ -122,15 +122,15 @@ class AnimatedToggleSwitchState extends State<AnimatedToggleSwitch> {
                               ? [
                                 BoxShadow(
                                   offset: const Offset(3, 3),
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.black.withValues(alpha: 0.2),
                                   blurRadius: 5,
                                 ),
                                 BoxShadow(
                                   offset: const Offset(-3, -3),
                                   color:
                                       isToggled
-                                          ? Colors.white.withOpacity(0.3)
-                                          : Colors.black.withOpacity(0.1),
+                                          ? Colors.white.withValues(alpha: 0.3)
+                                          : Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 5,
                                 ),
                               ]

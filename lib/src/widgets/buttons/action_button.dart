@@ -170,7 +170,7 @@ class _ActionButtonState extends State<ActionButton>
       height: widget.height,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(12),
         ),
       ).animate().slideX(duration: widget.animationDuration),

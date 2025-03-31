@@ -26,7 +26,7 @@ class DashedBorderPainter extends CustomPainter {
           ..shader = ui.Gradient.linear(
             Offset(0, 0),
             Offset(size.width, size.height),
-            [color, color.withOpacity(0.8)],
+            [color, color.withValues(alpha: 0.8)],
           );
 
     final Path path =

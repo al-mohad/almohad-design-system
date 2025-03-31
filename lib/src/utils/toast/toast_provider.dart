@@ -7,15 +7,15 @@ enum ToastType { info, success, warning, danger }
 
 class ToastProvider extends StatefulWidget {
   final Widget child;
-  static final GlobalKey<_ToastProviderState> _key =
-      GlobalKey<_ToastProviderState>();
+  static final GlobalKey<ToastProviderState> _key =
+      GlobalKey<ToastProviderState>();
 
   const ToastProvider({super.key, required this.child});
 
-  static _ToastProviderState of(BuildContext context) {
-    final _ToastProviderState? result =
+  static ToastProviderState of(BuildContext context) {
+    final ToastProviderState? result =
         _key.currentState ??
-        context.findAncestorStateOfType<_ToastProviderState>();
+        context.findAncestorStateOfType<ToastProviderState>();
 
     if (result == null) {
       throw FlutterError(
@@ -26,10 +26,10 @@ class ToastProvider extends StatefulWidget {
   }
 
   @override
-  State<ToastProvider> createState() => _ToastProviderState();
+  State<ToastProvider> createState() => ToastProviderState();
 }
 
-class _ToastProviderState extends State<ToastProvider> {
+class ToastProviderState extends State<ToastProvider> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 

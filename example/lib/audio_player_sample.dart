@@ -15,7 +15,7 @@ class DummyAudioPlayer extends StatelessWidget {
             AnimatedToggleSwitch(
               values: ['Light', 'Dark'],
               onToggle: (index, value) {
-                print("Toggled to: $value (Index: $index)");
+                debugPrint("Toggled to: $value (Index: $index)");
               },
               animationDuration: const Duration(milliseconds: 500),
               animationCurve: Curves.easeInOut,
@@ -50,10 +50,10 @@ class DummyAudioPlayer extends StatelessWidget {
                 primaryValues: ['Free', 'Premium'],
                 secondaryValues: ['Monthly', 'Annualy'],
                 onPrimaryToggle: (index, value) {
-                  print('onPrimaryToggle: $index, $value');
+                  debugPrint('onPrimaryToggle: $index, $value');
                 },
                 onSecondaryToggle: (index, value) {
-                  print('onSecondaryToggle: $index, $value');
+                  debugPrint('onSecondaryToggle: $index, $value');
                 },
               ),
             ),

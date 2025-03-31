@@ -19,7 +19,7 @@ class DottedBorderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint =
         Paint()
-          ..color = borderColor.withOpacity(0.6)
+          ..color = borderColor.withValues(alpha: 0.6)
           ..strokeWidth = strokeWidth
           ..style = PaintingStyle.stroke;
 

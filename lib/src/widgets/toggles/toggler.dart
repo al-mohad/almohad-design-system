@@ -43,11 +43,11 @@ class TransformingAnimatedToggleSwitch extends StatefulWidget {
   });
 
   @override
-  _TransformingAnimatedToggleSwitchState createState() =>
-      _TransformingAnimatedToggleSwitchState();
+  TransformingAnimatedToggleSwitchState createState() =>
+      TransformingAnimatedToggleSwitchState();
 }
 
-class _TransformingAnimatedToggleSwitchState
+class TransformingAnimatedToggleSwitchState
     extends State<TransformingAnimatedToggleSwitch> {
   int primaryIndex = 0;
   int secondaryIndex = 0;
@@ -157,12 +157,12 @@ class _TransformingAnimatedToggleSwitchState
                           ? [
                             BoxShadow(
                               offset: const Offset(3, 3),
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.black.withValues(alpha: 0.2),
                               blurRadius: 5,
                             ),
                             BoxShadow(
                               offset: const Offset(-3, -3),
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha: 0.3),
                               blurRadius: 5,
                             ),
                           ]

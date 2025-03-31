@@ -166,7 +166,7 @@ class CustomContainer extends StatelessWidget {
   );
 
   BoxDecoration _cyberpunk(Color color) => BoxDecoration(
-    color: Colors.black,
+    color: color,
     borderRadius: BorderRadius.circular(borderRadius),
     border: Border.all(color: Colors.cyanAccent, width: 2),
     boxShadow: [
@@ -211,7 +211,7 @@ class CustomContainer extends StatelessWidget {
   );
 
   BoxDecoration _skeuomorphism(Color color) => BoxDecoration(
-    color: Colors.brown.shade200,
+    color: color.withValues(alpha: 0.8),
     borderRadius: BorderRadius.circular(borderRadius),
     border: Border.all(color: Colors.brown.shade700, width: 2),
     boxShadow: [
