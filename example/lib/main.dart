@@ -3,7 +3,10 @@ import 'package:example/buttons_example.dart';
 import 'package:example/containers_sample.dart';
 import 'package:example/dummy_containers.dart';
 import 'package:example/dummy_texts.dart';
+import 'package:example/fading_scroll_effect.dart';
+import 'package:example/lottie_view_screen.dart';
 import 'package:example/parallax_images.dart';
+import 'package:example/sliders_example.dart';
 import 'package:example/texts_sample.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +55,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FadingScrollEffect(),
+                  ),
+                );
+              },
+              title: Text('scroll effects'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+            ),
             ListTile(
               onTap: () {
                 Navigator.push(
@@ -165,6 +180,28 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text('Containers Samples'),
               trailing: const Icon(Icons.arrow_forward_ios),
               subtitle: Text('This is a simple example of a text widget.'),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SlidersExample(),
+                  ),
+                );
+              },
+              title: Text('Sliders Samples'),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LottieViewScreen(),
+                  ),
+                );
+              },
+              title: Text('Lottie Viewer Samples'),
             ),
           ],
         ),

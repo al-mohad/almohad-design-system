@@ -280,3 +280,5 @@ Upgrade now and enjoy the enhancements!
 🚀 _Upgrade now for an even more powerful UI experience!_
 
 ## 0.2.2 - 🚀 AnalysisFixes
+
+## 0.2.3 - 🚀 Lottie Animation viewer added

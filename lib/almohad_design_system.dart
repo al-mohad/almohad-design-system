@@ -6,6 +6,7 @@ import 'package:almohad_design_system/src/utils/toast/toast_provider.dart'
     as tp;
 import 'package:almohad_design_system/src/widgets/animations/animated_switcher.dart';
 import 'package:almohad_design_system/src/widgets/audio_message/audio_message.dart';
+import 'package:almohad_design_system/src/widgets/effects/fading_scroll.dart';
 import 'package:almohad_design_system/src/widgets/inputs/tag_input.dart';
 import 'package:almohad_design_system/src/widgets/layouts/loading_overlay.dart';
 import 'package:almohad_design_system/src/widgets/morphisms/cyber_punk.dart';
@@ -14,16 +15,20 @@ import 'package:almohad_design_system/src/widgets/morphisms/isometric.dart';
 import 'package:almohad_design_system/src/widgets/morphisms/retro_futurism.dart';
 import 'package:almohad_design_system/src/widgets/morphisms/skeuomorphism.dart';
 import 'package:almohad_design_system/src/widgets/others/label_divider.dart';
+import 'package:almohad_design_system/src/widgets/sliders/animated_slider.dart';
+import 'package:almohad_design_system/src/widgets/sliders/smooth_slider.dart';
 import 'package:almohad_design_system/src/widgets/texts/transformative_text.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:lottie/lottie.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 import 'src/src.dart';
 import 'src/utils/color_strength.dart';
 import 'src/utils/copy_to_clipboard.dart';
 import 'src/widgets/container/custom_container.dart';
+import 'src/widgets/lottie/lottie_viewer.dart';
 import 'src/widgets/others/parallax_image.dart';
 import 'src/widgets/texts/rich_text_widget.dart';
 
@@ -1092,5 +1097,110 @@ class DesignSystem {
     transformType: type ?? TransformType.glitch,
     style: style,
     repeat: repeat ?? true,
+  );
+
+  static Widget animatedSlider({
+    required double value,
+    required Color barColor,
+    required Color rightFillColor,
+    required Color leftFillColor,
+    required double height,
+    required double barWidth,
+    BorderRadius? cornerRadius,
+    required TextStyle labelStyle,
+    void Function(double value)? onChange,
+  }) => AnimatedSlider(
+    value: value,
+    barColor: barColor,
+    labelStyle: labelStyle,
+    cornerRadius: cornerRadius,
+    rightFillColor: rightFillColor,
+    leftFillColor: leftFillColor,
+    height: height,
+    barWidth: barWidth,
+  );
+
+  static Widget fadingScroll({
+    required Widget Function(BuildContext, ScrollController) builder,
+    ScrollController? controller,
+    double? startFadingSize,
+    double? endFadingSize,
+    double? fadingSize,
+    double? startScrollExtent,
+    double? endScrollExtent,
+    double? scrollExtent,
+    Duration? transitionDuration,
+  }) => FadingScroll(
+    builder: builder,
+    controller: controller,
+    startFadingSize: startFadingSize,
+    endFadingSize: endFadingSize,
+    fadingSize: fadingSize,
+    startScrollExtent: startScrollExtent,
+    endScrollExtent: endScrollExtent,
+    scrollExtent: scrollExtent,
+    transitionDuration: transitionDuration,
+  );
+
+  static Widget smoothSlider({
+    double range = 8.0,
+    required Icon buttonIcon,
+    double buttonBorderRadius = 90,
+    Color buttonColor = Colors.blue,
+    double buttonSize = 50,
+    required Widget barText,
+    double barHeight = 45,
+    Color barColor = Colors.black12,
+    double barBorderRadius = 90,
+    required Widget progressText,
+    Color progressColor = Colors.amber,
+    required void Function() onSuccess,
+    void Function()? onFailed,
+  }) => SmoothSlider(
+    buttonIcon: buttonIcon,
+    barText: barText,
+    progressText: progressText,
+    onSuccess: onSuccess,
+  );
+
+  /// A static helper method to easily create a [LottieViewer] with common properties.
+  static Widget lottieViewer({
+    required String lottiePath,
+    bool? repeat,
+    bool? reverse,
+    bool? applyColor,
+    String? text,
+    TextStyle? textStyle,
+    double? height,
+    double? width,
+    BoxFit? fit,
+    double? speed,
+    Animation<double>? controller,
+    void Function(LottieComposition)? onLoaded,
+    LottieDelegates? delegates,
+    AlignmentGeometry? alignment,
+    EdgeInsetsGeometry? textPadding,
+    MainAxisAlignment? mainAxisAlignment,
+    CrossAxisAlignment? crossAxisAlignment,
+    LottieType type = LottieType.asset,
+  }) => LottieViewer(
+    path: lottiePath,
+    type: type,
+    repeat: repeat,
+    reverse: reverse,
+    applyColor: applyColor,
+    text: text,
+    textStyle: textStyle,
+    height: height,
+    width: width,
+    fit: fit,
+    speed: speed,
+    controller: controller,
+    onLoaded: onLoaded,
+    delegates: delegates,
+    alignment: alignment,
+    textPadding: textPadding,
+    mainAxisAlignment: mainAxisAlignment,
+    crossAxisAlignment: crossAxisAlignment,
   );
 }
